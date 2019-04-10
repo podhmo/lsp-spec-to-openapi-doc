@@ -1,6 +1,14 @@
 SPEC_URL := https://github.com/Microsoft/language-server-protocol/raw/master/versions/protocol-2-x.md
 
-src/interfaces.json: src/spec.md
-	python tools/parse.py src/spec.md | tee $@
+default: src/jsonschema.json
+
 src/spec.md:
 	wget ${SPEC_URL} -O $@
+src/parsed.json: src/spec.md tools/parse.py
+	python tools/parse.py src/spec.md | tee $@
+src/extracted.json: src/parsed.json tools/extract.py
+	python tools/extract.py src/parsed.json | tee $@
+src/interfaces.ts: src/extracted.json
+	jqfpy -r '"".join(["".join(code) for code in get("components/schemas")])' src/extracted.json | tee $@
+src/jsonschema.json: src/interfaces.ts
+	./node_modules/.bin/quicktype src/interfaces.ts -l schema | tee $@

@@ -1,0 +1,1578 @@
+{
+  "components": {
+    "schemas": [
+      [
+        "interface Message {\n",
+        "\tjsonrpc: string;\n",
+        "}\n"
+      ],
+      [
+        "interface RequestMessage extends Message {\n",
+        "\n",
+        "\t/**\n",
+        "\t * The request id.\n",
+        "\t */\n",
+        "\tid: number | string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The method to be invoked.\n",
+        "\t */\n",
+        "\tmethod: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The method's params.\n",
+        "\t */\n",
+        "\tparams?: any\n",
+        "}\n"
+      ],
+      [
+        "interface ResponseMessage extends Message {\n",
+        "\t/**\n",
+        "\t * The request id.\n",
+        "\t */\n",
+        "\tid: number | string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The result of a request. This can be omitted in\n",
+        "\t * the case of an error.\n",
+        "\t */\n",
+        "\tresult?: any;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The error object in case a request fails.\n",
+        "\t */\n",
+        "\terror?: ResponseError<any>;\n",
+        "}\n",
+        "\n",
+        "interface ResponseError<D> {\n",
+        "\t/**\n",
+        "\t * A number indicating the error type that occurred.\n",
+        "\t */\n",
+        "\tcode: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * A string providing a short description of the error.\n",
+        "\t */\n",
+        "\tmessage: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * A Primitive or Structured value that contains additional\n",
+        "\t * information about the error. Can be omitted.\n",
+        "\t */\n",
+        "\tdata?: D;\n",
+        "}\n",
+        "\n",
+        "export namespace ErrorCodes {\n",
+        "\texport const ParseError: number = -32700;\n",
+        "\texport const InvalidRequest: number = -32600;\n",
+        "\texport const MethodNotFound: number = -32601;\n",
+        "\texport const InvalidParams: number = -32602;\n",
+        "\texport const InternalError: number = -32603;\n",
+        "\texport const serverErrorStart: number = -32099;\n",
+        "\texport const serverErrorEnd: number = -32000;\n",
+        "}\n"
+      ],
+      [
+        "interface NotificationMessage extends Message {\n",
+        "\t/**\n",
+        "\t * The method to be invoked.\n",
+        "\t */\n",
+        "\tmethod: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The notification's params.\n",
+        "\t */\n",
+        "\tparams?: any\n",
+        "}\n"
+      ],
+      [
+        "interface CancelParams {\n",
+        "\t/**\n",
+        "\t * The request id to cancel.\n",
+        "\t */\n",
+        "\tid: number | string;\n",
+        "}\n"
+      ],
+      [
+        "interface Position {\n",
+        "\t/**\n",
+        "\t * Line position in a document (zero-based).\n",
+        "\t */\n",
+        "\tline: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * Character offset on a line in a document (zero-based).\n",
+        "\t */\n",
+        "\tcharacter: number;\n",
+        "}\n"
+      ],
+      [
+        "interface Range {\n",
+        "\t/**\n",
+        "\t * The range's start position.\n",
+        "\t */\n",
+        "\tstart: Position;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The range's end position.\n",
+        "\t */\n",
+        "\tend: Position;\n",
+        "}\n"
+      ],
+      [
+        "interface Location {\n",
+        "\turi: string;\n",
+        "\trange: Range;\n",
+        "}\n"
+      ],
+      [
+        "interface Diagnostic {\n",
+        "\t/**\n",
+        "\t * The range at which the message applies.\n",
+        "\t */\n",
+        "\trange: Range;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The diagnostic's severity. Can be omitted. If omitted it is up to the\n",
+        "\t * client to interpret diagnostics as error, warning, info or hint.\n",
+        "\t */\n",
+        "\tseverity?: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The diagnostic's code. Can be omitted.\n",
+        "\t */\n",
+        "\tcode?: number | string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * A human-readable string describing the source of this\n",
+        "\t * diagnostic, e.g. 'typescript' or 'super lint'.\n",
+        "\t */\n",
+        "\tsource?: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The diagnostic's message.\n",
+        "\t */\n",
+        "\tmessage: string;\n",
+        "}\n"
+      ],
+      [
+        "enum DiagnosticSeverity {\n",
+        "\t/**\n",
+        "\t * Reports an error.\n",
+        "\t */\n",
+        "\tError = 1,\n",
+        "\t/**\n",
+        "\t * Reports a warning.\n",
+        "\t */\n",
+        "\tWarning = 2,\n",
+        "\t/**\n",
+        "\t * Reports an information.\n",
+        "\t */\n",
+        "\tInformation = 3,\n",
+        "\t/**\n",
+        "\t * Reports a hint.\n",
+        "\t */\n",
+        "\tHint = 4\n",
+        "}\n"
+      ],
+      [
+        "interface Command {\n",
+        "\t/**\n",
+        "\t * Title of the command, like `save`.\n",
+        "\t */\n",
+        "\ttitle: string;\n",
+        "\t/**\n",
+        "\t * The identifier of the actual command handler.\n",
+        "\t */\n",
+        "\tcommand: string;\n",
+        "\t/**\n",
+        "\t * Arguments that the command handler should be\n",
+        "\t * invoked with.\n",
+        "\t */\n",
+        "\targuments?: any[];\n",
+        "}\n"
+      ],
+      [
+        "interface TextEdit {\n",
+        "\t/**\n",
+        "\t * The range of the text document to be manipulated. To insert\n",
+        "\t * text into a document create a range where start === end.\n",
+        "\t */\n",
+        "\trange: Range;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The string to be inserted. For delete operations use an\n",
+        "\t * empty string.\n",
+        "\t */\n",
+        "\tnewText: string;\n",
+        "}\n"
+      ],
+      [
+        "interface WorkspaceEdit {\n",
+        "\t/**\n",
+        "\t * Holds changes to existing resources.\n",
+        "\t */\n",
+        "\tchanges: { [uri: string]: TextEdit[]; };\n",
+        "}\n"
+      ],
+      [
+        "interface TextDocumentIdentifier {\n",
+        "\t/**\n",
+        "\t * The text document's URI.\n",
+        "\t */\n",
+        "\turi: string;\n",
+        "}\n"
+      ],
+      [
+        "interface TextDocumentItem {\n",
+        "\t/**\n",
+        "\t * The text document's URI.\n",
+        "\t */\n",
+        "\turi: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The text document's language identifier.\n",
+        "\t */\n",
+        "\tlanguageId: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The version number of this document (it will strictly increase after each\n",
+        "\t * change, including undo/redo).\n",
+        "\t */\n",
+        "\tversion: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The content of the opened text document.\n",
+        "\t */\n",
+        "\ttext: string;\n",
+        "}\n"
+      ],
+      [
+        "interface VersionedTextDocumentIdentifier extends TextDocumentIdentifier {\n",
+        "\t/**\n",
+        "\t * The version number of this document.\n",
+        "\t */\n",
+        "\tversion: number;\n",
+        "}\n"
+      ],
+      [
+        "interface TextDocumentPositionParams {\n",
+        "\t/**\n",
+        "\t * The text document.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The position inside the text document.\n",
+        "\t */\n",
+        "\tposition: Position;\n",
+        "}\n"
+      ],
+      [
+        "interface InitializeParams {\n",
+        "\t/**\n",
+        "\t * The process Id of the parent process that started\n",
+        "\t * the server. Is null if the process has not been started by another process.\n",
+        "\t * If the parent process is not alive then the server should exit (see exit notification) its process.\n",
+        "\t */\n",
+        "\tprocessId?: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The rootPath of the workspace. Is null\n",
+        "\t * if no folder is open.\n",
+        "\t */\n",
+        "\trootPath?: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * User provided initialization options.\n",
+        "\t */\n",
+        "\tinitializationOptions?: any;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The capabilities provided by the client (editor)\n",
+        "\t */\n",
+        "\tcapabilities: ClientCapabilities;\n",
+        "}\n"
+      ],
+      [
+        "interface ClientCapabilities {\n",
+        "}\n"
+      ],
+      [
+        "interface InitializeResult {\n",
+        "\t/**\n",
+        "\t * The capabilities the language server provides.\n",
+        "\t */\n",
+        "\tcapabilities: ServerCapabilities;\n",
+        "}\n"
+      ],
+      [
+        "interface InitializeError {\n",
+        "\t/**\n",
+        "\t * Indicates whether the client should retry to send the\n",
+        "\t * initialize request after showing the message provided\n",
+        "\t * in the ResponseError.\n",
+        "\t */\n",
+        "\tretry: boolean;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Defines how the host (editor) should sync document changes to the language server.\n",
+        " */\n",
+        "enum TextDocumentSyncKind {\n",
+        "\t/**\n",
+        "\t * Documents should not be synced at all.\n",
+        "\t */\n",
+        "\tNone = 0,\n",
+        "\t/**\n",
+        "\t * Documents are synced by always sending the full content of the document.\n",
+        "\t */\n",
+        "\tFull = 1,\n",
+        "\t/**\n",
+        "\t * Documents are synced by sending the full content on open. After that only incremental \n",
+        "\t * updates to the document are sent.\n",
+        "\t */\n",
+        "\tIncremental = 2\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Completion options.\n",
+        " */\n",
+        "interface CompletionOptions {\n",
+        "\t/**\n",
+        "\t * The server provides support to resolve additional information for a completion item.\n",
+        "\t */\n",
+        "\tresolveProvider?: boolean;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The characters that trigger completion automatically.\n",
+        "\t */\n",
+        "\ttriggerCharacters?: string[];\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Signature help options.\n",
+        " */\n",
+        "interface SignatureHelpOptions {\n",
+        "\t/**\n",
+        "\t * The characters that trigger signature help automatically.\n",
+        "\t */\n",
+        "\ttriggerCharacters?: string[];\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Code Lens options.\n",
+        " */\n",
+        "interface CodeLensOptions {\n",
+        "\t/**\n",
+        "\t * Code lens has a resolve provider as well.\n",
+        "\t */\n",
+        "\tresolveProvider?: boolean;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Format document on type options\n",
+        " */\n",
+        "interface DocumentOnTypeFormattingOptions {\n",
+        "\t/**\n",
+        "\t * A character on which formatting should be triggered, like `}`.\n",
+        "\t */\n",
+        "\tfirstTriggerCharacter: string;\n",
+        "\t/**\n",
+        "\t * More trigger characters.\n",
+        "\t */\n",
+        "\tmoreTriggerCharacter?: string[]\n",
+        "}\n"
+      ],
+      [
+        "interface ServerCapabilities {\n",
+        "\t/**\n",
+        "\t * Defines how text documents are synced.\n",
+        "\t */\n",
+        "\ttextDocumentSync?: number;\n",
+        "\t/**\n",
+        "\t * The server provides hover support.\n",
+        "\t */\n",
+        "\thoverProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides completion support.\n",
+        "\t */\n",
+        "\tcompletionProvider?: CompletionOptions;\n",
+        "\t/**\n",
+        "\t * The server provides signature help support.\n",
+        "\t */\n",
+        "\tsignatureHelpProvider?: SignatureHelpOptions;\n",
+        "\t/**\n",
+        "\t * The server provides goto definition support.\n",
+        "\t */\n",
+        "\tdefinitionProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides find references support.\n",
+        "\t */\n",
+        "\treferencesProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides document highlight support.\n",
+        "\t */\n",
+        "\tdocumentHighlightProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides document symbol support.\n",
+        "\t */\n",
+        "\tdocumentSymbolProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides workspace symbol support.\n",
+        "\t */\n",
+        "\tworkspaceSymbolProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides code actions.\n",
+        "\t */\n",
+        "\tcodeActionProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides code lens.\n",
+        "\t */\n",
+        "\tcodeLensProvider?: CodeLensOptions;\n",
+        "\t/**\n",
+        "\t * The server provides document formatting.\n",
+        "\t */\n",
+        "\tdocumentFormattingProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides document range formatting.\n",
+        "\t */\n",
+        "\tdocumentRangeFormattingProvider?: boolean;\n",
+        "\t/**\n",
+        "\t * The server provides document formatting on typing.\n",
+        "\t */\n",
+        "\tdocumentOnTypeFormattingProvider?: DocumentOnTypeFormattingOptions;\n",
+        "\t/**\n",
+        "\t * The server provides rename support.\n",
+        "\t */\n",
+        "\trenameProvider?: boolean\n",
+        "}\n"
+      ],
+      [
+        "interface ShowMessageParams {\n",
+        "\t/**\n",
+        "\t * The message type. See {@link MessageType}.\n",
+        "\t */\n",
+        "\ttype: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The actual message.\n",
+        "\t */\n",
+        "\tmessage: string;\n",
+        "}\n"
+      ],
+      [
+        "enum MessageType {\n",
+        "\t/**\n",
+        "\t * An error message.\n",
+        "\t */\n",
+        "\tError = 1,\n",
+        "\t/**\n",
+        "\t * A warning message.\n",
+        "\t */\n",
+        "\tWarning = 2,\n",
+        "\t/**\n",
+        "\t * An information message.\n",
+        "\t */\n",
+        "\tInfo = 3,\n",
+        "\t/**\n",
+        "\t * A log message.\n",
+        "\t */\n",
+        "\tLog = 4\n",
+        "}\n"
+      ],
+      [
+        "interface ShowMessageRequestParams {\n",
+        "\t/**\n",
+        "\t * The message type. See {@link MessageType}\n",
+        "\t */\n",
+        "\ttype: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The actual message\n",
+        "\t */\n",
+        "\tmessage: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The message action items to present.\n",
+        "\t */\n",
+        "\tactions?: MessageActionItem[];\n",
+        "}\n"
+      ],
+      [
+        "interface MessageActionItem {\n",
+        "\t/**\n",
+        "\t * A short title like 'Retry', 'Open Log' etc.\n",
+        "\t */\n",
+        "\ttitle: string;\n",
+        "}\n"
+      ],
+      [
+        "interface LogMessageParams {\n",
+        "\t/**\n",
+        "\t * The message type. See {@link MessageType}\n",
+        "\t */\n",
+        "\ttype: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The actual message\n",
+        "\t */\n",
+        "\tmessage: string;\n",
+        "}\n"
+      ],
+      [
+        "interface DidChangeConfigurationParams {\n",
+        "\t/**\n",
+        "\t * The actual changed settings\n",
+        "\t */\n",
+        "\tsettings: any;\n",
+        "}\n"
+      ],
+      [
+        "interface DidOpenTextDocumentParams {\n",
+        "\t/**\n",
+        "\t * The document that was opened.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentItem;\n",
+        "}\n"
+      ],
+      [
+        "interface DidChangeTextDocumentParams {\n",
+        "\t/**\n",
+        "\t * The document that did change. The version number points\n",
+        "\t * to the version after all provided content changes have\n",
+        "\t * been applied.\n",
+        "\t */\n",
+        "\ttextDocument: VersionedTextDocumentIdentifier;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The actual content changes.\n",
+        "\t */\n",
+        "\tcontentChanges: TextDocumentContentChangeEvent[];\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * An event describing a change to a text document. If range and rangeLength are omitted\n",
+        " * the new text is considered to be the full content of the document.\n",
+        " */\n",
+        "interface TextDocumentContentChangeEvent {\n",
+        "\t/**\n",
+        "\t * The range of the document that changed.\n",
+        "\t */\n",
+        "\trange?: Range;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The length of the range that got replaced.\n",
+        "\t */\n",
+        "\trangeLength?: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The new text of the document.\n",
+        "\t */\n",
+        "\ttext: string;\n",
+        "}\n"
+      ],
+      [
+        "interface DidCloseTextDocumentParams {\n",
+        "\t/**\n",
+        "\t * The document that was closed.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "}\n"
+      ],
+      [
+        "interface DidSaveTextDocumentParams {\n",
+        "\t/**\n",
+        "\t * The document that was saved.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "}\n"
+      ],
+      [
+        "interface DidChangeWatchedFilesParams {\n",
+        "\t/**\n",
+        "\t * The actual file events.\n",
+        "\t */\n",
+        "\tchanges: FileEvent[];\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * The file event type.\n",
+        " */\n",
+        "enum FileChangeType {\n",
+        "\t/**\n",
+        "\t * The file got created.\n",
+        "\t */\n",
+        "\tCreated = 1,\n",
+        "\t/**\n",
+        "\t * The file got changed.\n",
+        "\t */\n",
+        "\tChanged = 2,\n",
+        "\t/**\n",
+        "\t * The file got deleted.\n",
+        "\t */\n",
+        "\tDeleted = 3\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * An event describing a file change.\n",
+        " */\n",
+        "interface FileEvent {\n",
+        "\t/**\n",
+        "\t * The file's URI.\n",
+        "\t */\n",
+        "\turi: string;\n",
+        "\t/**\n",
+        "\t * The change type.\n",
+        "\t */\n",
+        "\ttype: number;\n",
+        "}\n"
+      ],
+      [
+        "interface PublishDiagnosticsParams {\n",
+        "\t/**\n",
+        "\t * The URI for which diagnostic information is reported.\n",
+        "\t */\n",
+        "\turi: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * An array of diagnostic information items.\n",
+        "\t */\n",
+        "\tdiagnostics: Diagnostic[];\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Represents a collection of [completion items](#CompletionItem) to be presented\n",
+        " * in the editor.\n",
+        " */\n",
+        "interface CompletionList {\n",
+        "\t/**\n",
+        "\t * This list it not complete. Further typing should result in recomputing\n",
+        "\t * this list.\n",
+        "\t */\n",
+        "\tisIncomplete: boolean;\n",
+        "\t/**\n",
+        "\t * The completion items.\n",
+        "\t */\n",
+        "\titems: CompletionItem[];\n",
+        "}\n"
+      ],
+      [
+        "interface CompletionItem {\n",
+        "\t/**\n",
+        "\t * The label of this completion item. By default\n",
+        "\t * also the text that is inserted when selecting\n",
+        "\t * this completion.\n",
+        "\t */\n",
+        "\tlabel: string;\n",
+        "\t/**\n",
+        "\t * The kind of this completion item. Based of the kind\n",
+        "\t * an icon is chosen by the editor.\n",
+        "\t */\n",
+        "\tkind?: number;\n",
+        "\t/**\n",
+        "\t * A human-readable string with additional information\n",
+        "\t * about this item, like type or symbol information.\n",
+        "\t */\n",
+        "\tdetail?: string;\n",
+        "\t/**\n",
+        "\t * A human-readable string that represents a doc-comment.\n",
+        "\t */\n",
+        "\tdocumentation?: string;\n",
+        "\t/**\n",
+        "\t * A string that should be used when comparing this item\n",
+        "\t * with other items. When `falsy` the label is used.\n",
+        "\t */\n",
+        "\tsortText?: string;\n",
+        "\t/**\n",
+        "\t * A string that should be used when filtering a set of\n",
+        "\t * completion items. When `falsy` the label is used.\n",
+        "\t */\n",
+        "\tfilterText?: string;\n",
+        "\t/**\n",
+        "\t * A string that should be inserted a document when selecting\n",
+        "\t * this completion. When `falsy` the label is used.\n",
+        "\t */\n",
+        "\tinsertText?: string;\n",
+        "\t/**\n",
+        "\t * An edit which is applied to a document when selecting\n",
+        "\t * this completion. When an edit is provided the value of\n",
+        "\t * insertText is ignored.\n",
+        "\t */\n",
+        "\ttextEdit?: TextEdit;\n",
+        "\t/**\n",
+        "\t * An optional array of additional text edits that are applied when\n",
+        "\t * selecting this completion. Edits must not overlap with the main edit\n",
+        "\t * nor with themselves.\n",
+        "\t */\n",
+        "\tadditionalTextEdits?: TextEdit[];\n",
+        "\t/**\n",
+        "\t * An optional command that is executed *after* inserting this completion. *Note* that\n",
+        "\t * additional modifications to the current document should be described with the\n",
+        "\t * additionalTextEdits-property.\n",
+        "\t */\n",
+        "\tcommand?: Command;\n",
+        "\t/**\n",
+        "\t * An data entry field that is preserved on a completion item between\n",
+        "\t * a completion and a completion resolve request.\n",
+        "\t */\n",
+        "\tdata?: any\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * The kind of a completion entry.\n",
+        " */\n",
+        "enum CompletionItemKind {\n",
+        "\tText = 1,\n",
+        "\tMethod = 2,\n",
+        "\tFunction = 3,\n",
+        "\tConstructor = 4,\n",
+        "\tField = 5,\n",
+        "\tVariable = 6,\n",
+        "\tClass = 7,\n",
+        "\tInterface = 8,\n",
+        "\tModule = 9,\n",
+        "\tProperty = 10,\n",
+        "\tUnit = 11,\n",
+        "\tValue = 12,\n",
+        "\tEnum = 13,\n",
+        "\tKeyword = 14,\n",
+        "\tSnippet = 15,\n",
+        "\tColor = 16,\n",
+        "\tFile = 17,\n",
+        "\tReference = 18\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * The result of a hover request.\n",
+        " */\n",
+        "interface Hover {\n",
+        "\t/**\n",
+        "\t * The hover's content\n",
+        "\t */\n",
+        "\tcontents: MarkedString | MarkedString[];\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * An optional range is a range inside a text document \n",
+        "\t * that is used to visualize a hover, e.g. by changing the background color.\n",
+        "\t */\n",
+        "\trange?: Range;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * The marked string is rendered:\n",
+        " * - as markdown if it is represented as a string\n",
+        " * - as code block of the given language if it is represented as a pair of a language and a value\n",
+        " *\n",
+        " * The pair of a language and a value is an equivalent to markdown:\n",
+        " * ```${language}\n",
+        " * ${value}\n",
+        " * ```\n",
+        " */\n",
+        "type MarkedString = string | { language: string; value: string };\n"
+      ],
+      [
+        "/**\n",
+        " * Signature help represents the signature of something\n",
+        " * callable. There can be multiple signature but only one\n",
+        " * active and only one active parameter.\n",
+        " */\n",
+        "interface SignatureHelp {\n",
+        "\t/**\n",
+        "\t * One or more signatures.\n",
+        "\t */\n",
+        "\tsignatures: SignatureInformation[];\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The active signature.\n",
+        "\t */\n",
+        "\tactiveSignature?: number;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The active parameter of the active signature.\n",
+        "\t */\n",
+        "\tactiveParameter?: number;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Represents the signature of something callable. A signature\n",
+        " * can have a label, like a function-name, a doc-comment, and\n",
+        " * a set of parameters.\n",
+        " */\n",
+        "interface SignatureInformation {\n",
+        "\t/**\n",
+        "\t * The label of this signature. Will be shown in\n",
+        "\t * the UI.\n",
+        "\t */\n",
+        "\tlabel: string;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The human-readable doc-comment of this signature. Will be shown\n",
+        "\t * in the UI but can be omitted.\n",
+        "\t */\n",
+        "\tdocumentation?: string;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The parameters of this signature.\n",
+        "\t */\n",
+        "\tparameters?: ParameterInformation[];\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Represents a parameter of a callable-signature. A parameter can\n",
+        " * have a label and a doc-comment.\n",
+        " */\n",
+        "interface ParameterInformation {\n",
+        "\t/**\n",
+        "\t * The label of this parameter. Will be shown in\n",
+        "\t * the UI.\n",
+        "\t */\n",
+        "\tlabel: string;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The human-readable doc-comment of this parameter. Will be shown\n",
+        "\t * in the UI but can be omitted.\n",
+        "\t */\n",
+        "\tdocumentation?: string;\n",
+        "}\n"
+      ],
+      [
+        "interface ReferenceParams extends TextDocumentPositionParams {\n",
+        "\tcontext: ReferenceContext\n",
+        "}\n"
+      ],
+      [
+        "interface ReferenceContext {\n",
+        "\t/**\n",
+        "\t * Include the declaration of the current symbol.\n",
+        "\t */\n",
+        "\tincludeDeclaration: boolean;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * A document highlight is a range inside a text document which deserves\n",
+        " * special attention. Usually a document highlight is visualized by changing\n",
+        " * the background color of its range.\n",
+        " * \n",
+        " */\n",
+        "interface DocumentHighlight {\n",
+        "\t/**\n",
+        "\t * The range this highlight applies to.\n",
+        "\t */\n",
+        "\trange: Range;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The highlight kind, default is DocumentHighlightKind.Text.\n",
+        "\t */\n",
+        "\tkind?: number;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * A document highlight kind.\n",
+        " */\n",
+        "enum DocumentHighlightKind {\n",
+        "\t/**\n",
+        "\t * A textual occurrence.\n",
+        "\t */\n",
+        "\tText = 1,\n",
+        "\n",
+        "\t/**\n",
+        "\t * Read-access of a symbol, like reading a variable.\n",
+        "\t */\n",
+        "\tRead = 2,\n",
+        "\n",
+        "\t/**\n",
+        "\t * Write-access of a symbol, like writing to a variable.\n",
+        "\t */\n",
+        "\tWrite = 3\n",
+        "}\n"
+      ],
+      [
+        "interface DocumentSymbolParams {\n",
+        "\t/**\n",
+        "\t * The text document.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Represents information about programming constructs like variables, classes,\n",
+        " * interfaces etc.\n",
+        " */\n",
+        "interface SymbolInformation {\n",
+        "\t/**\n",
+        "\t * The name of this symbol.\n",
+        "\t */\n",
+        "\tname: string;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The kind of this symbol.\n",
+        "\t */\n",
+        "\tkind: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The location of this symbol.\n",
+        "\t */\n",
+        "\tlocation: Location;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The name of the symbol containing this symbol.\n",
+        "\t */\n",
+        "\tcontainerName?: string;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * A symbol kind.\n",
+        " */\n",
+        "export enum SymbolKind {\n",
+        "\tFile = 1,\n",
+        "\tModule = 2,\n",
+        "\tNamespace = 3,\n",
+        "\tPackage = 4,\n",
+        "\tClass = 5,\n",
+        "\tMethod = 6,\n",
+        "\tProperty = 7,\n",
+        "\tField = 8,\n",
+        "\tConstructor = 9,\n",
+        "\tEnum = 10,\n",
+        "\tInterface = 11,\n",
+        "\tFunction = 12,\n",
+        "\tVariable = 13,\n",
+        "\tConstant = 14,\n",
+        "\tString = 15,\n",
+        "\tNumber = 16,\n",
+        "\tBoolean = 17,\n",
+        "\tArray = 18,\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * The parameters of a Workspace Symbol Request.\n",
+        " */\n",
+        "interface WorkspaceSymbolParams {\n",
+        "\t/**\n",
+        "\t * A non-empty query string\n",
+        "\t */\n",
+        "\tquery: string;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Params for the CodeActionRequest\n",
+        " */\n",
+        "interface CodeActionParams {\n",
+        "\t/**\n",
+        "\t * The document in which the command was invoked.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The range for which the command was invoked.\n",
+        "\t */\n",
+        "\trange: Range;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * Context carrying additional information.\n",
+        "\t */\n",
+        "\tcontext: CodeActionContext;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Contains additional diagnostic information about the context in which\n",
+        " * a code action is run.\n",
+        " */\n",
+        "interface CodeActionContext {\n",
+        "\t/**\n",
+        "\t * An array of diagnostics.\n",
+        "\t */\n",
+        "\tdiagnostics: Diagnostic[];\n",
+        "}\n"
+      ],
+      [
+        "interface CodeLensParams {\n",
+        "\t/**\n",
+        "\t * The document to request code lens for.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * A code lens represents a command that should be shown along with\n",
+        " * source text, like the number of references, a way to run tests, etc.\n",
+        " *\n",
+        " * A code lens is _unresolved_ when no command is associated to it. For performance\n",
+        " * reasons the creation of a code lens and resolving should be done in two stages.\n",
+        " */\n",
+        "interface CodeLens {\n",
+        "\t/**\n",
+        "\t * The range in which this code lens is valid. Should only span a single line.\n",
+        "\t */\n",
+        "\trange: Range;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The command this code lens represents.\n",
+        "\t */\n",
+        "\tcommand?: Command;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * A data entry field that is preserved on a code lens item between\n",
+        "\t * a code lens and a code lens resolve request.\n",
+        "\t */\n",
+        "\tdata?: any\n",
+        "}\n"
+      ],
+      [
+        "interface DocumentLinkParams {\n",
+        "\t/**\n",
+        "\t * The document to provide document links for.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "}\n"
+      ],
+      [
+        "interface DocumentFormattingParams {\n",
+        "\t/**\n",
+        "\t * The document to format.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The format options.\n",
+        "\t */\n",
+        "\toptions: FormattingOptions;\n",
+        "}\n"
+      ],
+      [
+        "/**\n",
+        " * Value-object describing what options formatting should use.\n",
+        " */\n",
+        "interface FormattingOptions {\n",
+        "\t/**\n",
+        "\t * Size of a tab in spaces.\n",
+        "\t */\n",
+        "\ttabSize: number;\n",
+        "\n",
+        "\t/**\n",
+        "\t * Prefer spaces over tabs.\n",
+        "\t */\n",
+        "\tinsertSpaces: boolean;\n",
+        "\n",
+        "\t/**\n",
+        "\t * Signature for further properties.\n",
+        "\t */\n",
+        "\t[key: string]: boolean | number | string;\n",
+        "}\n"
+      ],
+      [
+        "interface DocumentRangeFormattingParams {\n",
+        "\t/**\n",
+        "\t * The document to format.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The range to format\n",
+        "\t */\n",
+        "\trange: Range;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The format options\n",
+        "\t */\n",
+        "\toptions: FormattingOptions;\n",
+        "}\n"
+      ],
+      [
+        "interface DocumentOnTypeFormattingParams {\n",
+        "\t/**\n",
+        "\t * The document to format.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The position at which this request was sent.\n",
+        "\t */\n",
+        "\tposition: Position;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The character that has been typed.\n",
+        "\t */\n",
+        "\tch: string;\n",
+        "\t\n",
+        "\t/**\n",
+        "\t * The format options.\n",
+        "\t */\n",
+        "\toptions: FormattingOptions;\n",
+        "}\n"
+      ],
+      [
+        "interface RenameParams {\n",
+        "\t/**\n",
+        "\t * The document to format.\n",
+        "\t */\n",
+        "\ttextDocument: TextDocumentIdentifier;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The position at which this request was sent.\n",
+        "\t */\n",
+        "\tposition: Position;\n",
+        "\n",
+        "\t/**\n",
+        "\t * The new name of the symbol. If the given name is not valid the\n",
+        "\t * request must return a [ResponseError](#ResponseError) with an\n",
+        "\t * appropriate message set.\n",
+        "\t */\n",
+        "\tnewName: string;\n",
+        "}\n"
+      ]
+    ]
+  },
+  "paths": {
+    "$/cancelRequest": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "$/cancelRequest",
+          "params": "`CancelParams` defined as follows:"
+        }
+      }
+    },
+    "initialize": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "initialize",
+          "params": "`InitializeParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`InitializeResult` defined as follows:"
+        }
+      }
+    },
+    "shutdown": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "shutdown",
+          "params": "undefined"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "undefined",
+          "error": "code and message set in case an exception happens during shutdown request."
+        }
+      }
+    },
+    "exit": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "exit",
+          "params": "undefined"
+        }
+      }
+    },
+    "window/showMessage": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "window/showMessage",
+          "params": "`ShowMessageParams` defined as follows:"
+        }
+      }
+    },
+    "window/showMessageRequest": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "window/showMessageRequest",
+          "params": "`ShowMessageRequestParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "the selected `MessageActionItem`",
+          "error": "code and message set in case an exception happens during showing a message."
+        }
+      }
+    },
+    "window/logMessage": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "window/logMessage",
+          "params": "`LogMessageParams` defined as follows:"
+        }
+      }
+    },
+    "telemetry/event": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "telemetry/event",
+          "params": "any"
+        }
+      }
+    },
+    "workspace/didChangeConfiguration',": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "workspace/didChangeConfiguration',",
+          "params": "`DidChangeConfigurationParams` defined as follows:"
+        }
+      }
+    },
+    "textDocument/didOpen": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "textDocument/didOpen",
+          "params": "`DidOpenTextDocumentParams` defined as follows:"
+        }
+      }
+    },
+    "textDocument/didChange": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "textDocument/didChange",
+          "params": "`DidChangeTextDocumentParams` defined as follows:"
+        }
+      }
+    },
+    "textDocument/didClose": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "textDocument/didClose",
+          "params": "`DidCloseTextDocumentParams` defined as follows:"
+        }
+      }
+    },
+    "workspace/didChangeWatchedFiles": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "workspace/didChangeWatchedFiles",
+          "params": "`DidChangeWatchedFilesParams` defined as follows:"
+        }
+      }
+    },
+    "textDocument/publishDiagnostics": {
+      "notification": {
+        "type": "Notification",
+        "attrs": {
+          "method": "textDocument/publishDiagnostics",
+          "params": "`PublishDiagnosticsParams` defined as follows:"
+        }
+      }
+    },
+    "textDocument/completion": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/completion",
+          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`CompletionItem[] | CompletionList`"
+        }
+      }
+    },
+    "completionItem/resolve": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "completionItem/resolve",
+          "params": "`CompletionItem`"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`CompletionItem`",
+          "error": "code and message set in case an exception happens during the completion resolve request."
+        }
+      }
+    },
+    "textDocument/hover": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/hover",
+          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`Hover` defined as follows:"
+        }
+      }
+    },
+    "textDocument/signatureHelp": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/signatureHelp",
+          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`SignatureHelp` defined as follows:"
+        }
+      }
+    },
+    "textDocument/definition": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/definition",
+          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`Location`](#location) | [`Location`](#location)[]",
+          "error": "code and message set in case an exception happens during the definition request."
+        }
+      }
+    },
+    "textDocument/references": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/references",
+          "params": "`ReferenceParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`Location`](#location)[]",
+          "error": "code and message set in case an exception happens during the reference request."
+        }
+      }
+    },
+    "textDocument/documentHighlight": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/documentHighlight",
+          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`DocumentHighlight`[] defined as follows:"
+        }
+      }
+    },
+    "textDocument/documentSymbol": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/documentSymbol",
+          "params": "`DocumentSymbolParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`SymbolInformation`[] defined as follows:"
+        }
+      }
+    },
+    "workspace/symbol": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "workspace/symbol",
+          "params": "`WorkspaceSymbolParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`SymbolInformation[]` as defined above.",
+          "error": "code and message set in case an exception happens during the workspace symbol request."
+        }
+      }
+    },
+    "textDocument/codeAction": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/codeAction",
+          "params": "`CodeActionParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`Command[]`](#command) defined as follows:",
+          "error": "code and message set in case an exception happens during the code action request."
+        }
+      }
+    },
+    "textDocument/codeLens": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/codeLens",
+          "params": "`CodeLensParams` defined as follows:"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`CodeLens[]` defined as follows:"
+        }
+      }
+    },
+    "codeLens/resolve": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "codeLens/resolve",
+          "params": "`CodeLens`"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`CodeLens`",
+          "error": "code and message set in case an exception happens during the code lens resolve request."
+        }
+      }
+    },
+    "textDocument/documentLink": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/documentLink",
+          "params": "`DocumentLinkParams`, defined as follows"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "An array of `DocumentLink`, or `null` or `undefined`."
+        }
+      }
+    },
+    "documentLink/resolve": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "documentLink/resolve",
+          "params": "`DocumentLink`"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "`DocumentLink`",
+          "error": "code and message set in case an exception happens during the document link resolve request."
+        }
+      }
+    },
+    "textDocument/formatting": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/formatting",
+          "params": "`DocumentFormattingParams` defined as follows"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`TextEdit[]`](#textedit) describing the modification to the document to be formatted.",
+          "error": "code and message set in case an exception happens during the formatting request."
+        }
+      }
+    },
+    "textDocument/rangeFormatting',": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/rangeFormatting',",
+          "params": "`DocumentRangeFormattingParams` defined as follows"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`TextEdit[]`](#textedit) describing the modification to the document to be formatted.",
+          "error": "code and message set in case an exception happens during the range formatting request."
+        }
+      }
+    },
+    "textDocument/onTypeFormatting": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/onTypeFormatting",
+          "params": "`DocumentOnTypeFormattingParams` defined as follows"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`TextEdit[]`](#textedit) describing the modification to the document.",
+          "error": "code and message set in case an exception happens during the range formatting request."
+        }
+      }
+    },
+    "textDocument/rename": {
+      "request": {
+        "type": "Request",
+        "attrs": {
+          "method": "textDocument/rename",
+          "params": "`RenameParams` defined as follows"
+        }
+      },
+      "response": {
+        "type": "Response",
+        "attrs": {
+          "result": "[`WorkspaceEdit`](#workspaceedit) describing the modification to the workspace.",
+          "error": "code and message set in case an exception happens during the rename request."
+        }
+      }
+    }
+  }
+}
