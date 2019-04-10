@@ -1,0 +1,1518 @@
+components:
+  schemas:
+    CancelParams:
+      type: object
+      properties:
+        id:
+          description: The request id to cancel.
+          type:
+          - string
+          - number
+          title: id
+      required:
+      - id
+    ClientCapabilities:
+      type: object
+    CodeActionContext:
+      description: |-
+        Contains additional diagnostic information about the context in which
+        a code action is run.
+      type: object
+      properties:
+        diagnostics:
+          description: An array of diagnostics.
+          type: array
+          items:
+            $ref: '#/definitions/Diagnostic'
+          title: diagnostics
+      required:
+      - diagnostics
+    CodeActionParams:
+      description: Params for the CodeActionRequest
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document in which the command was invoked.
+          title: textDocument
+        range:
+          $ref: '#/definitions/Range'
+          description: The range for which the command was invoked.
+          title: range
+        context:
+          $ref: '#/definitions/CodeActionContext'
+          description: Context carrying additional information.
+          title: context
+      required:
+      - context
+      - range
+      - textDocument
+    CodeLens:
+      description: |-
+        A code lens represents a command that should be shown along with
+        source text, like the number of references, a way to run tests, etc.
+
+        A code lens is _unresolved_ when no command is associated to it. For performance
+        reasons the creation of a code lens and resolving should be done in two stages.
+      type: object
+      properties:
+        range:
+          $ref: '#/definitions/Range'
+          description: The range in which this code lens is valid. Should only span
+            a single line.
+          title: range
+        command:
+          description: The command this code lens represents.
+          $ref: '#/definitions/Command'
+          title: command
+        data:
+          description: |-
+            A data entry field that is preserved on a code lens item between
+            a code lens and a code lens resolve request.
+          title: data
+      required:
+      - range
+    CodeLensOptions:
+      description: Code Lens options.
+      type: object
+      properties:
+        resolveProvider:
+          description: Code lens has a resolve provider as well.
+          type: boolean
+          title: resolveProvider
+    CodeLensParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document to request code lens for.
+          title: textDocument
+      required:
+      - textDocument
+    Command:
+      type: object
+      properties:
+        title:
+          description: Title of the command, like `save`.
+          type: string
+          title: title
+        command:
+          description: The identifier of the actual command handler.
+          type: string
+          title: command
+        arguments:
+          description: |-
+            Arguments that the command handler should be
+            invoked with.
+          type: array
+          items: {}
+          title: arguments
+      required:
+      - command
+      - title
+    CompletionItem:
+      type: object
+      properties:
+        label:
+          description: |-
+            The label of this completion item. By default
+            also the text that is inserted when selecting
+            this completion.
+          type: string
+          title: label
+        kind:
+          description: |-
+            The kind of this completion item. Based of the kind
+            an icon is chosen by the editor.
+          type: number
+          title: kind
+        detail:
+          description: |-
+            A human-readable string with additional information
+            about this item, like type or symbol information.
+          type: string
+          title: detail
+        documentation:
+          description: A human-readable string that represents a doc-comment.
+          type: string
+          title: documentation
+        sortText:
+          description: |-
+            A string that should be used when comparing this item
+            with other items. When `falsy` the label is used.
+          type: string
+          title: sortText
+        filterText:
+          description: |-
+            A string that should be used when filtering a set of
+            completion items. When `falsy` the label is used.
+          type: string
+          title: filterText
+        insertText:
+          description: |-
+            A string that should be inserted a document when selecting
+            this completion. When `falsy` the label is used.
+          type: string
+          title: insertText
+        textEdit:
+          description: |-
+            An edit which is applied to a document when selecting
+            this completion. When an edit is provided the value of
+            insertText is ignored.
+          $ref: '#/definitions/TextEdit'
+          title: textEdit
+        additionalTextEdits:
+          description: |-
+            An optional array of additional text edits that are applied when
+            selecting this completion. Edits must not overlap with the main edit
+            nor with themselves.
+          type: array
+          items:
+            $ref: '#/definitions/TextEdit'
+          title: additionalTextEdits
+        command:
+          description: |-
+            An optional command that is executed *after* inserting this completion. *Note* that
+            additional modifications to the current document should be described with the
+            additionalTextEdits-property.
+          $ref: '#/definitions/Command'
+          title: command
+        data:
+          description: |-
+            An data entry field that is preserved on a completion item between
+            a completion and a completion resolve request.
+          title: data
+      required:
+      - label
+    CompletionItemKind:
+      description: The kind of a completion entry.
+      enum:
+      - 1
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      type: number
+    CompletionList:
+      description: |-
+        Represents a collection of [completion items](#CompletionItem) to be presented
+        in the editor.
+      type: object
+      properties:
+        isIncomplete:
+          description: |-
+            This list it not complete. Further typing should result in recomputing
+            this list.
+          type: boolean
+          title: isIncomplete
+        items:
+          description: The completion items.
+          type: array
+          items:
+            $ref: '#/definitions/CompletionItem'
+          title: items
+      required:
+      - isIncomplete
+      - items
+    CompletionOptions:
+      description: Completion options.
+      type: object
+      properties:
+        resolveProvider:
+          description: The server provides support to resolve additional information
+            for a completion item.
+          type: boolean
+          title: resolveProvider
+        triggerCharacters:
+          description: The characters that trigger completion automatically.
+          type: array
+          items:
+            type: string
+          title: triggerCharacters
+    D:
+      type: object
+    Diagnostic:
+      type: object
+      properties:
+        range:
+          $ref: '#/definitions/Range'
+          description: The range at which the message applies.
+          title: range
+        severity:
+          description: |-
+            The diagnostic's severity. Can be omitted. If omitted it is up to the
+            client to interpret diagnostics as error, warning, info or hint.
+          type: number
+          title: severity
+        code:
+          description: The diagnostic's code. Can be omitted.
+          type:
+          - string
+          - number
+          title: code
+        source:
+          description: |-
+            A human-readable string describing the source of this
+            diagnostic, e.g. 'typescript' or 'super lint'.
+          type: string
+          title: source
+        message:
+          description: The diagnostic's message.
+          type: string
+          title: message
+      required:
+      - message
+      - range
+    DiagnosticSeverity:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      type: number
+    DidChangeConfigurationParams:
+      type: object
+      properties:
+        settings:
+          description: The actual changed settings
+          title: settings
+      required:
+      - settings
+    DidChangeTextDocumentParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/VersionedTextDocumentIdentifier'
+          description: |-
+            The document that did change. The version number points
+            to the version after all provided content changes have
+            been applied.
+          title: textDocument
+        contentChanges:
+          description: The actual content changes.
+          type: array
+          items:
+            $ref: '#/definitions/TextDocumentContentChangeEvent'
+          title: contentChanges
+      required:
+      - contentChanges
+      - textDocument
+    DidChangeWatchedFilesParams:
+      type: object
+      properties:
+        changes:
+          description: The actual file events.
+          type: array
+          items:
+            $ref: '#/definitions/FileEvent'
+          title: changes
+      required:
+      - changes
+    DidCloseTextDocumentParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document that was closed.
+          title: textDocument
+      required:
+      - textDocument
+    DidOpenTextDocumentParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentItem'
+          description: The document that was opened.
+          title: textDocument
+      required:
+      - textDocument
+    DidSaveTextDocumentParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document that was saved.
+          title: textDocument
+      required:
+      - textDocument
+    DocumentFormattingParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document to format.
+          title: textDocument
+        options:
+          $ref: '#/definitions/FormattingOptions'
+          description: The format options.
+          title: options
+      required:
+      - options
+      - textDocument
+    DocumentHighlight:
+      description: |-
+        A document highlight is a range inside a text document which deserves
+        special attention. Usually a document highlight is visualized by changing
+        the background color of its range.
+      type: object
+      properties:
+        range:
+          $ref: '#/definitions/Range'
+          description: The range this highlight applies to.
+          title: range
+        kind:
+          description: The highlight kind, default is DocumentHighlightKind.Text.
+          type: number
+          title: kind
+      required:
+      - range
+    DocumentHighlightKind:
+      description: A document highlight kind.
+      enum:
+      - 1
+      - 2
+      - 3
+      type: number
+    DocumentLinkParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document to provide document links for.
+          title: textDocument
+      required:
+      - textDocument
+    DocumentOnTypeFormattingOptions:
+      description: Format document on type options
+      type: object
+      properties:
+        firstTriggerCharacter:
+          description: A character on which formatting should be triggered, like `}`.
+          type: string
+          title: firstTriggerCharacter
+        moreTriggerCharacter:
+          description: More trigger characters.
+          type: array
+          items:
+            type: string
+          title: moreTriggerCharacter
+      required:
+      - firstTriggerCharacter
+    DocumentOnTypeFormattingParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document to format.
+          title: textDocument
+        position:
+          $ref: '#/definitions/Position'
+          description: The position at which this request was sent.
+          title: position
+        ch:
+          description: The character that has been typed.
+          type: string
+          title: ch
+        options:
+          $ref: '#/definitions/FormattingOptions'
+          description: The format options.
+          title: options
+      required:
+      - ch
+      - options
+      - position
+      - textDocument
+    DocumentRangeFormattingParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document to format.
+          title: textDocument
+        range:
+          $ref: '#/definitions/Range'
+          description: The range to format
+          title: range
+        options:
+          $ref: '#/definitions/FormattingOptions'
+          description: The format options
+          title: options
+      required:
+      - options
+      - range
+      - textDocument
+    DocumentSymbolParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The text document.
+          title: textDocument
+      required:
+      - textDocument
+    FileChangeType:
+      description: The file event type.
+      enum:
+      - 1
+      - 2
+      - 3
+      type: number
+    FileEvent:
+      description: An event describing a file change.
+      type: object
+      properties:
+        uri:
+          description: The file's URI.
+          type: string
+          title: uri
+        type:
+          description: The change type.
+          type: number
+          title: type
+      required:
+      - type
+      - uri
+    FormattingOptions:
+      description: Value-object describing what options formatting should use.
+      type: object
+      additionalProperties:
+        type:
+        - string
+        - number
+        - boolean
+      properties:
+        tabSize:
+          description: Size of a tab in spaces.
+          type: number
+          title: tabSize
+        insertSpaces:
+          description: Prefer spaces over tabs.
+          type: boolean
+          title: insertSpaces
+      required:
+      - insertSpaces
+      - tabSize
+    Hover:
+      description: The result of a hover request.
+      type: object
+      properties:
+        contents:
+          description: The hover's content
+          anyOf:
+          - type: object
+            properties:
+              language:
+                type: string
+                title: language
+              value:
+                type: string
+                title: value
+            required:
+            - language
+            - value
+          - type: array
+            items:
+              anyOf:
+              - type: object
+                properties:
+                  language:
+                    type: string
+                    title: language
+                  value:
+                    type: string
+                    title: value
+                required:
+                - language
+                - value
+              - type: string
+          - type: string
+          title: contents
+        range:
+          description: "An optional range is a range inside a text document \nthat\
+            \ is used to visualize a hover, e.g. by changing the background color."
+          $ref: '#/definitions/Range'
+          title: range
+      required:
+      - contents
+    InitializeError:
+      type: object
+      properties:
+        retry:
+          description: |-
+            Indicates whether the client should retry to send the
+            initialize request after showing the message provided
+            in the ResponseError.
+          type: boolean
+          title: retry
+      required:
+      - retry
+    InitializeParams:
+      type: object
+      properties:
+        processId:
+          description: |-
+            The process Id of the parent process that started
+            the server. Is null if the process has not been started by another process.
+            If the parent process is not alive then the server should exit (see exit notification) its process.
+          type: number
+          title: processId
+        rootPath:
+          description: |-
+            The rootPath of the workspace. Is null
+            if no folder is open.
+          type: string
+          title: rootPath
+        initializationOptions:
+          description: User provided initialization options.
+          title: initializationOptions
+        capabilities:
+          $ref: '#/definitions/ClientCapabilities'
+          description: The capabilities provided by the client (editor)
+          title: capabilities
+      required:
+      - capabilities
+    InitializeResult:
+      type: object
+      properties:
+        capabilities:
+          $ref: '#/definitions/ServerCapabilities'
+          description: The capabilities the language server provides.
+          title: capabilities
+      required:
+      - capabilities
+    Location:
+      type: object
+      properties:
+        uri:
+          type: string
+          title: uri
+        range:
+          $ref: '#/definitions/Range'
+          title: range
+      required:
+      - range
+      - uri
+    LogMessageParams:
+      type: object
+      properties:
+        type:
+          description: The message type. See {@link MessageType}
+          type: number
+          title: type
+        message:
+          description: The actual message
+          type: string
+          title: message
+      required:
+      - message
+      - type
+    MarkedString:
+      anyOf:
+      - type: object
+        properties:
+          language:
+            type: string
+            title: language
+          value:
+            type: string
+            title: value
+        required:
+        - language
+        - value
+      - type: string
+    Message:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+          title: jsonrpc
+      required:
+      - jsonrpc
+    MessageActionItem:
+      type: object
+      properties:
+        title:
+          description: A short title like 'Retry', 'Open Log' etc.
+          type: string
+          title: title
+      required:
+      - title
+    MessageType:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      type: number
+    NotificationMessage:
+      type: object
+      properties:
+        method:
+          description: The method to be invoked.
+          type: string
+          title: method
+        params:
+          description: The notification's params.
+          title: params
+        jsonrpc:
+          type: string
+          title: jsonrpc
+      required:
+      - jsonrpc
+      - method
+    ParameterInformation:
+      description: |-
+        Represents a parameter of a callable-signature. A parameter can
+        have a label and a doc-comment.
+      type: object
+      properties:
+        label:
+          description: |-
+            The label of this parameter. Will be shown in
+            the UI.
+          type: string
+          title: label
+        documentation:
+          description: |-
+            The human-readable doc-comment of this parameter. Will be shown
+            in the UI but can be omitted.
+          type: string
+          title: documentation
+      required:
+      - label
+    Position:
+      type: object
+      properties:
+        line:
+          description: Line position in a document (zero-based).
+          type: number
+          title: line
+        character:
+          description: Character offset on a line in a document (zero-based).
+          type: number
+          title: character
+      required:
+      - character
+      - line
+    PublishDiagnosticsParams:
+      type: object
+      properties:
+        uri:
+          description: The URI for which diagnostic information is reported.
+          type: string
+          title: uri
+        diagnostics:
+          description: An array of diagnostic information items.
+          type: array
+          items:
+            $ref: '#/definitions/Diagnostic'
+          title: diagnostics
+      required:
+      - diagnostics
+      - uri
+    Range:
+      type: object
+      properties:
+        start:
+          $ref: '#/definitions/Position'
+          description: The range's start position.
+          title: start
+        end:
+          $ref: '#/definitions/Position'
+          description: The range's end position.
+          title: end
+      required:
+      - end
+      - start
+    ReferenceContext:
+      type: object
+      properties:
+        includeDeclaration:
+          description: Include the declaration of the current symbol.
+          type: boolean
+          title: includeDeclaration
+      required:
+      - includeDeclaration
+    ReferenceParams:
+      type: object
+      properties:
+        context:
+          $ref: '#/definitions/ReferenceContext'
+          title: context
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The text document.
+          title: textDocument
+        position:
+          $ref: '#/definitions/Position'
+          description: The position inside the text document.
+          title: position
+      required:
+      - context
+      - position
+      - textDocument
+    RenameParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The document to format.
+          title: textDocument
+        position:
+          $ref: '#/definitions/Position'
+          description: The position at which this request was sent.
+          title: position
+        newName:
+          description: |-
+            The new name of the symbol. If the given name is not valid the
+            request must return a [ResponseError](#ResponseError) with an
+            appropriate message set.
+          type: string
+          title: newName
+      required:
+      - newName
+      - position
+      - textDocument
+    RequestMessage:
+      type: object
+      properties:
+        id:
+          description: The request id.
+          type:
+          - string
+          - number
+          title: id
+        method:
+          description: The method to be invoked.
+          type: string
+          title: method
+        params:
+          description: The method's params.
+          title: params
+        jsonrpc:
+          type: string
+          title: jsonrpc
+      required:
+      - id
+      - jsonrpc
+      - method
+    ResponseError:
+      $ref: '#/definitions/ResponseError<D>'
+    ResponseError<D>:
+      type: object
+      properties:
+        code:
+          description: A number indicating the error type that occurred.
+          type: number
+          title: code
+        message:
+          description: A string providing a short description of the error.
+          type: string
+          title: message
+        data:
+          description: |-
+            A Primitive or Structured value that contains additional
+            information about the error. Can be omitted.
+          $ref: '#/definitions/D'
+          title: data
+      required:
+      - code
+      - message
+    ResponseError<any>:
+      type: object
+      properties:
+        code:
+          description: A number indicating the error type that occurred.
+          type: number
+          title: code
+        message:
+          description: A string providing a short description of the error.
+          type: string
+          title: message
+        data:
+          description: |-
+            A Primitive or Structured value that contains additional
+            information about the error. Can be omitted.
+          title: data
+      required:
+      - code
+      - message
+    ResponseMessage:
+      type: object
+      properties:
+        id:
+          description: The request id.
+          type:
+          - string
+          - number
+          title: id
+        result:
+          description: |-
+            The result of a request. This can be omitted in
+            the case of an error.
+          title: result
+        error:
+          description: The error object in case a request fails.
+          $ref: '#/definitions/ResponseError<any>'
+          title: error
+        jsonrpc:
+          type: string
+          title: jsonrpc
+      required:
+      - id
+      - jsonrpc
+    ServerCapabilities:
+      type: object
+      properties:
+        textDocumentSync:
+          description: Defines how text documents are synced.
+          type: number
+          title: textDocumentSync
+        hoverProvider:
+          description: The server provides hover support.
+          type: boolean
+          title: hoverProvider
+        completionProvider:
+          description: The server provides completion support.
+          $ref: '#/definitions/CompletionOptions'
+          title: completionProvider
+        signatureHelpProvider:
+          description: The server provides signature help support.
+          $ref: '#/definitions/SignatureHelpOptions'
+          title: signatureHelpProvider
+        definitionProvider:
+          description: The server provides goto definition support.
+          type: boolean
+          title: definitionProvider
+        referencesProvider:
+          description: The server provides find references support.
+          type: boolean
+          title: referencesProvider
+        documentHighlightProvider:
+          description: The server provides document highlight support.
+          type: boolean
+          title: documentHighlightProvider
+        documentSymbolProvider:
+          description: The server provides document symbol support.
+          type: boolean
+          title: documentSymbolProvider
+        workspaceSymbolProvider:
+          description: The server provides workspace symbol support.
+          type: boolean
+          title: workspaceSymbolProvider
+        codeActionProvider:
+          description: The server provides code actions.
+          type: boolean
+          title: codeActionProvider
+        codeLensProvider:
+          description: The server provides code lens.
+          $ref: '#/definitions/CodeLensOptions'
+          title: codeLensProvider
+        documentFormattingProvider:
+          description: The server provides document formatting.
+          type: boolean
+          title: documentFormattingProvider
+        documentRangeFormattingProvider:
+          description: The server provides document range formatting.
+          type: boolean
+          title: documentRangeFormattingProvider
+        documentOnTypeFormattingProvider:
+          description: The server provides document formatting on typing.
+          $ref: '#/definitions/DocumentOnTypeFormattingOptions'
+          title: documentOnTypeFormattingProvider
+        renameProvider:
+          description: The server provides rename support.
+          type: boolean
+          title: renameProvider
+    ShowMessageParams:
+      type: object
+      properties:
+        type:
+          description: The message type. See {@link MessageType}.
+          type: number
+          title: type
+        message:
+          description: The actual message.
+          type: string
+          title: message
+      required:
+      - message
+      - type
+    ShowMessageRequestParams:
+      type: object
+      properties:
+        type:
+          description: The message type. See {@link MessageType}
+          type: number
+          title: type
+        message:
+          description: The actual message
+          type: string
+          title: message
+        actions:
+          description: The message action items to present.
+          type: array
+          items:
+            $ref: '#/definitions/MessageActionItem'
+          title: actions
+      required:
+      - message
+      - type
+    SignatureHelp:
+      description: |-
+        Signature help represents the signature of something
+        callable. There can be multiple signature but only one
+        active and only one active parameter.
+      type: object
+      properties:
+        signatures:
+          description: One or more signatures.
+          type: array
+          items:
+            $ref: '#/definitions/SignatureInformation'
+          title: signatures
+        activeSignature:
+          description: The active signature.
+          type: number
+          title: activeSignature
+        activeParameter:
+          description: The active parameter of the active signature.
+          type: number
+          title: activeParameter
+      required:
+      - signatures
+    SignatureHelpOptions:
+      description: Signature help options.
+      type: object
+      properties:
+        triggerCharacters:
+          description: The characters that trigger signature help automatically.
+          type: array
+          items:
+            type: string
+          title: triggerCharacters
+    SignatureInformation:
+      description: |-
+        Represents the signature of something callable. A signature
+        can have a label, like a function-name, a doc-comment, and
+        a set of parameters.
+      type: object
+      properties:
+        label:
+          description: |-
+            The label of this signature. Will be shown in
+            the UI.
+          type: string
+          title: label
+        documentation:
+          description: |-
+            The human-readable doc-comment of this signature. Will be shown
+            in the UI but can be omitted.
+          type: string
+          title: documentation
+        parameters:
+          description: The parameters of this signature.
+          type: array
+          items:
+            $ref: '#/definitions/ParameterInformation'
+          title: parameters
+      required:
+      - label
+    SymbolInformation:
+      description: |-
+        Represents information about programming constructs like variables, classes,
+        interfaces etc.
+      type: object
+      properties:
+        name:
+          description: The name of this symbol.
+          type: string
+          title: name
+        kind:
+          description: The kind of this symbol.
+          type: number
+          title: kind
+        location:
+          $ref: '#/definitions/Location'
+          description: The location of this symbol.
+          title: location
+        containerName:
+          description: The name of the symbol containing this symbol.
+          type: string
+          title: containerName
+      required:
+      - kind
+      - location
+      - name
+    SymbolKind:
+      description: A symbol kind.
+      enum:
+      - 1
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      type: number
+    TextDocumentContentChangeEvent:
+      description: |-
+        An event describing a change to a text document. If range and rangeLength are omitted
+        the new text is considered to be the full content of the document.
+      type: object
+      properties:
+        range:
+          description: The range of the document that changed.
+          $ref: '#/definitions/Range'
+          title: range
+        rangeLength:
+          description: The length of the range that got replaced.
+          type: number
+          title: rangeLength
+        text:
+          description: The new text of the document.
+          type: string
+          title: text
+      required:
+      - text
+    TextDocumentIdentifier:
+      type: object
+      properties:
+        uri:
+          description: The text document's URI.
+          type: string
+          title: uri
+      required:
+      - uri
+    TextDocumentItem:
+      type: object
+      properties:
+        uri:
+          description: The text document's URI.
+          type: string
+          title: uri
+        languageId:
+          description: The text document's language identifier.
+          type: string
+          title: languageId
+        version:
+          description: |-
+            The version number of this document (it will strictly increase after each
+            change, including undo/redo).
+          type: number
+          title: version
+        text:
+          description: The content of the opened text document.
+          type: string
+          title: text
+      required:
+      - languageId
+      - text
+      - uri
+      - version
+    TextDocumentPositionParams:
+      type: object
+      properties:
+        textDocument:
+          $ref: '#/definitions/TextDocumentIdentifier'
+          description: The text document.
+          title: textDocument
+        position:
+          $ref: '#/definitions/Position'
+          description: The position inside the text document.
+          title: position
+      required:
+      - position
+      - textDocument
+    TextDocumentSyncKind:
+      description: Defines how the host (editor) should sync document changes to the
+        language server.
+      enum:
+      - 0
+      - 1
+      - 2
+      type: number
+    TextEdit:
+      type: object
+      properties:
+        range:
+          $ref: '#/definitions/Range'
+          description: |-
+            The range of the text document to be manipulated. To insert
+            text into a document create a range where start === end.
+          title: range
+        newText:
+          description: |-
+            The string to be inserted. For delete operations use an
+            empty string.
+          type: string
+          title: newText
+      required:
+      - newText
+      - range
+    VersionedTextDocumentIdentifier:
+      type: object
+      properties:
+        version:
+          description: The version number of this document.
+          type: number
+          title: version
+        uri:
+          description: The text document's URI.
+          type: string
+          title: uri
+      required:
+      - uri
+      - version
+    WorkspaceEdit:
+      type: object
+      properties:
+        changes:
+          description: Holds changes to existing resources.
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/definitions/TextEdit'
+          title: changes
+      required:
+      - changes
+    WorkspaceSymbolParams:
+      description: The parameters of a Workspace Symbol Request.
+      type: object
+      properties:
+        query:
+          description: A non-empty query string
+          type: string
+          title: query
+      required:
+      - query
+paths:
+  $/cancelRequest:
+    notification:
+      type: Notification
+      attrs:
+        method: $/cancelRequest
+        params: '`CancelParams` defined as follows:'
+  initialize:
+    request:
+      type: Request
+      attrs:
+        method: initialize
+        params: '`InitializeParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: '`InitializeResult` defined as follows:'
+  shutdown:
+    request:
+      type: Request
+      attrs:
+        method: shutdown
+        params: undefined
+    response:
+      type: Response
+      attrs:
+        result: undefined
+        error: code and message set in case an exception happens during shutdown request.
+  exit:
+    notification:
+      type: Notification
+      attrs:
+        method: exit
+        params: undefined
+  window/showMessage:
+    notification:
+      type: Notification
+      attrs:
+        method: window/showMessage
+        params: '`ShowMessageParams` defined as follows:'
+  window/showMessageRequest:
+    request:
+      type: Request
+      attrs:
+        method: window/showMessageRequest
+        params: '`ShowMessageRequestParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: the selected `MessageActionItem`
+        error: code and message set in case an exception happens during showing a
+          message.
+  window/logMessage:
+    notification:
+      type: Notification
+      attrs:
+        method: window/logMessage
+        params: '`LogMessageParams` defined as follows:'
+  telemetry/event:
+    notification:
+      type: Notification
+      attrs:
+        method: telemetry/event
+        params: any
+  workspace/didChangeConfiguration',:
+    notification:
+      type: Notification
+      attrs:
+        method: workspace/didChangeConfiguration',
+        params: '`DidChangeConfigurationParams` defined as follows:'
+  textDocument/didOpen:
+    notification:
+      type: Notification
+      attrs:
+        method: textDocument/didOpen
+        params: '`DidOpenTextDocumentParams` defined as follows:'
+  textDocument/didChange:
+    notification:
+      type: Notification
+      attrs:
+        method: textDocument/didChange
+        params: '`DidChangeTextDocumentParams` defined as follows:'
+  textDocument/didClose:
+    notification:
+      type: Notification
+      attrs:
+        method: textDocument/didClose
+        params: '`DidCloseTextDocumentParams` defined as follows:'
+  workspace/didChangeWatchedFiles:
+    notification:
+      type: Notification
+      attrs:
+        method: workspace/didChangeWatchedFiles
+        params: '`DidChangeWatchedFilesParams` defined as follows:'
+  textDocument/publishDiagnostics:
+    notification:
+      type: Notification
+      attrs:
+        method: textDocument/publishDiagnostics
+        params: '`PublishDiagnosticsParams` defined as follows:'
+  textDocument/completion:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/completion
+        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+    response:
+      type: Response
+      attrs:
+        result: '`CompletionItem[] | CompletionList`'
+  completionItem/resolve:
+    request:
+      type: Request
+      attrs:
+        method: completionItem/resolve
+        params: '`CompletionItem`'
+    response:
+      type: Response
+      attrs:
+        result: '`CompletionItem`'
+        error: code and message set in case an exception happens during the completion
+          resolve request.
+  textDocument/hover:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/hover
+        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+    response:
+      type: Response
+      attrs:
+        result: '`Hover` defined as follows:'
+  textDocument/signatureHelp:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/signatureHelp
+        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+    response:
+      type: Response
+      attrs:
+        result: '`SignatureHelp` defined as follows:'
+  textDocument/definition:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/definition
+        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+    response:
+      type: Response
+      attrs:
+        result: '[`Location`](#location) | [`Location`](#location)[]'
+        error: code and message set in case an exception happens during the definition
+          request.
+  textDocument/references:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/references
+        params: '`ReferenceParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: '[`Location`](#location)[]'
+        error: code and message set in case an exception happens during the reference
+          request.
+  textDocument/documentHighlight:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/documentHighlight
+        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+    response:
+      type: Response
+      attrs:
+        result: '`DocumentHighlight`[] defined as follows:'
+  textDocument/documentSymbol:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/documentSymbol
+        params: '`DocumentSymbolParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: '`SymbolInformation`[] defined as follows:'
+  workspace/symbol:
+    request:
+      type: Request
+      attrs:
+        method: workspace/symbol
+        params: '`WorkspaceSymbolParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: '`SymbolInformation[]` as defined above.'
+        error: code and message set in case an exception happens during the workspace
+          symbol request.
+  textDocument/codeAction:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/codeAction
+        params: '`CodeActionParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: '[`Command[]`](#command) defined as follows:'
+        error: code and message set in case an exception happens during the code action
+          request.
+  textDocument/codeLens:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/codeLens
+        params: '`CodeLensParams` defined as follows:'
+    response:
+      type: Response
+      attrs:
+        result: '`CodeLens[]` defined as follows:'
+  codeLens/resolve:
+    request:
+      type: Request
+      attrs:
+        method: codeLens/resolve
+        params: '`CodeLens`'
+    response:
+      type: Response
+      attrs:
+        result: '`CodeLens`'
+        error: code and message set in case an exception happens during the code lens
+          resolve request.
+  textDocument/documentLink:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/documentLink
+        params: '`DocumentLinkParams`, defined as follows'
+    response:
+      type: Response
+      attrs:
+        result: An array of `DocumentLink`, or `null` or `undefined`.
+  documentLink/resolve:
+    request:
+      type: Request
+      attrs:
+        method: documentLink/resolve
+        params: '`DocumentLink`'
+    response:
+      type: Response
+      attrs:
+        result: '`DocumentLink`'
+        error: code and message set in case an exception happens during the document
+          link resolve request.
+  textDocument/formatting:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/formatting
+        params: '`DocumentFormattingParams` defined as follows'
+    response:
+      type: Response
+      attrs:
+        result: '[`TextEdit[]`](#textedit) describing the modification to the document
+          to be formatted.'
+        error: code and message set in case an exception happens during the formatting
+          request.
+  textDocument/rangeFormatting',:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/rangeFormatting',
+        params: '`DocumentRangeFormattingParams` defined as follows'
+    response:
+      type: Response
+      attrs:
+        result: '[`TextEdit[]`](#textedit) describing the modification to the document
+          to be formatted.'
+        error: code and message set in case an exception happens during the range
+          formatting request.
+  textDocument/onTypeFormatting:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/onTypeFormatting
+        params: '`DocumentOnTypeFormattingParams` defined as follows'
+    response:
+      type: Response
+      attrs:
+        result: '[`TextEdit[]`](#textedit) describing the modification to the document.'
+        error: code and message set in case an exception happens during the range
+          formatting request.
+  textDocument/rename:
+    request:
+      type: Request
+      attrs:
+        method: textDocument/rename
+        params: '`RenameParams` defined as follows'
+    response:
+      type: Response
+      attrs:
+        result: '[`WorkspaceEdit`](#workspaceedit) describing the modification to
+          the workspace.'
+        error: code and message set in case an exception happens during the rename
+          request.

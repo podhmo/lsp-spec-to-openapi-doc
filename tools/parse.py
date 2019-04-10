@@ -3,6 +3,8 @@ import sys
 import argparse
 import io
 
+from dictknife import loading
+
 
 def parse(itr: io.TextIOBase):
     def _in_code():
@@ -80,8 +82,6 @@ def main():
 
     r = []
     for f in files:
-        from dictknife import loading
-
         loading.dumpfile(parse(f), format="json")
 
 

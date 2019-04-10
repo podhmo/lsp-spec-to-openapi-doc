@@ -1,7 +1,6 @@
-import itertools
 import sys
 import argparse
-import io
+from dictknife import loading
 
 
 def extract(data):
@@ -48,8 +47,6 @@ def main():
         files = [sys.stdin]
 
     for f in files:
-        from dictknife import loading
-
         loading.dumpfile(extract(loading.load(f)), format="json")
 
 

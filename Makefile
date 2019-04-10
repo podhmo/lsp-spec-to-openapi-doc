@@ -12,3 +12,5 @@ src/interfaces.ts: src/extracted.json
 	jqfpy -r '"".join(["".join(code) for code in get("components/schemas")])' src/extracted.json | tee $@
 src/jsonschema.json: src/interfaces.ts
 	./node_modules/.bin/quicktype src/interfaces.ts -l schema | tee $@
+src/swagger.yaml:  src/jsonschema.json src/extracted.json tools/merge.py
+	python tools/merge.py --extracted=src/extracted.json --jsonschema=src/jsonschema.json -o yaml | tee $@
