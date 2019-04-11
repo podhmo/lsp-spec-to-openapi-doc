@@ -1532,6 +1532,55 @@
                 "textDocument"
             ]
         },
+        "textDocumentCompletionResponse": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/CompletionList"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CompletionItem"
+                    }
+                }
+            ]
+        },
+        "workspaceSymbolResponse": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/SymbolInformation"
+            }
+        },
+        "textDocumentCodeActionResponse": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Command"
+            }
+        },
+        "textDocumentCodeLensResponse": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/CodeLens"
+            }
+        },
+        "textDocumentFormattingResponse": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TextEdit"
+            }
+        },
+        "textDocumentRangeFormattingResponse": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TextEdit"
+            }
+        },
+        "textDocumentOnTypeFormattingResponse": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/TextEdit"
+            }
+        },
         "ResponseError<any>": {
             "title": "ResponseError<any>",
             "type": "object",

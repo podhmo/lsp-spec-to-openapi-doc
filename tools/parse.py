@@ -20,7 +20,7 @@ def parse(itr: io.TextIOBase):
         buf = []
         for line in itr:
             if line.lstrip("").startswith("*"):
-                buf.append([x.strip("' ") for x in line.strip("* \n").split(":", 1)])
+                buf.append([x.strip("' ,") for x in line.strip("* \n").split(":", 1)])
                 continue
             itr = itertools.chain([line], itr)
             break

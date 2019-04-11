@@ -952,7 +952,7 @@
                         {
                           "type": "Notification",
                           "attrs": {
-                            "method": "workspace/didChangeConfiguration',",
+                            "method": "workspace/didChangeConfiguration",
                             "params": "`DidChangeConfigurationParams` defined as follows:"
                           }
                         },
@@ -2039,7 +2039,7 @@
                         {
                           "type": "Request",
                           "attrs": {
-                            "method": "textDocument/rangeFormatting',",
+                            "method": "textDocument/rangeFormatting",
                             "params": "`DocumentRangeFormattingParams` defined as follows"
                           }
                         },

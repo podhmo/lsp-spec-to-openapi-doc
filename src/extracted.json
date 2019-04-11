@@ -1143,7 +1143,14 @@
         "\t */\n",
         "\tnewName: string;\n",
         "}\n"
-      ]
+      ],
+      "\n/* the Response of textDocument/completion */\ntype textDocumentCompletionResponse = CompletionItem[] | CompletionList\n",
+      "\n/* the Response of workspace/symbol */\ntype workspaceSymbolResponse = SymbolInformation[]\n",
+      "\n/* the Response of textDocument/codeAction */\ntype textDocumentCodeActionResponse = Command[]\n",
+      "\n/* the Response of textDocument/codeLens */\ntype textDocumentCodeLensResponse = CodeLens[]\n",
+      "\n/* the Response of textDocument/formatting */\ntype textDocumentFormattingResponse = TextEdit[]\n",
+      "\n/* the Response of textDocument/rangeFormatting */\ntype textDocumentRangeFormattingResponse = TextEdit[]\n",
+      "\n/* the Response of textDocument/onTypeFormatting */\ntype textDocumentOnTypeFormattingResponse = TextEdit[]\n"
     ]
   },
   "paths": {
@@ -1152,7 +1159,9 @@
         "type": "Notification",
         "attrs": {
           "method": "$/cancelRequest",
-          "params": "`CancelParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/CancelParams"
+          }
         }
       }
     },
@@ -1161,13 +1170,17 @@
         "type": "Request",
         "attrs": {
           "method": "initialize",
-          "params": "`InitializeParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/InitializeParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`InitializeResult` defined as follows:"
+          "result": {
+            "$ref": "#/components/schemas/InitializeResult"
+          }
         }
       }
     },
@@ -1201,7 +1214,9 @@
         "type": "Notification",
         "attrs": {
           "method": "window/showMessage",
-          "params": "`ShowMessageParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/ShowMessageParams"
+          }
         }
       }
     },
@@ -1210,13 +1225,17 @@
         "type": "Request",
         "attrs": {
           "method": "window/showMessageRequest",
-          "params": "`ShowMessageRequestParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/ShowMessageRequestParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "the selected `MessageActionItem`",
+          "result": {
+            "$ref": "#/components/schemas/MessageActionItem"
+          },
           "error": "code and message set in case an exception happens during showing a message."
         }
       }
@@ -1226,7 +1245,9 @@
         "type": "Notification",
         "attrs": {
           "method": "window/logMessage",
-          "params": "`LogMessageParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/LogMessageParams"
+          }
         }
       }
     },
@@ -1239,12 +1260,14 @@
         }
       }
     },
-    "workspace/didChangeConfiguration',": {
+    "workspace/didChangeConfiguration": {
       "notification": {
         "type": "Notification",
         "attrs": {
-          "method": "workspace/didChangeConfiguration',",
-          "params": "`DidChangeConfigurationParams` defined as follows:"
+          "method": "workspace/didChangeConfiguration",
+          "params": {
+            "$ref": "#/components/schemas/DidChangeConfigurationParams"
+          }
         }
       }
     },
@@ -1253,7 +1276,9 @@
         "type": "Notification",
         "attrs": {
           "method": "textDocument/didOpen",
-          "params": "`DidOpenTextDocumentParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/DidOpenTextDocumentParams"
+          }
         }
       }
     },
@@ -1262,7 +1287,9 @@
         "type": "Notification",
         "attrs": {
           "method": "textDocument/didChange",
-          "params": "`DidChangeTextDocumentParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/DidChangeTextDocumentParams"
+          }
         }
       }
     },
@@ -1271,7 +1298,9 @@
         "type": "Notification",
         "attrs": {
           "method": "textDocument/didClose",
-          "params": "`DidCloseTextDocumentParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/DidCloseTextDocumentParams"
+          }
         }
       }
     },
@@ -1280,7 +1309,9 @@
         "type": "Notification",
         "attrs": {
           "method": "workspace/didChangeWatchedFiles",
-          "params": "`DidChangeWatchedFilesParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/DidChangeWatchedFilesParams"
+          }
         }
       }
     },
@@ -1289,7 +1320,9 @@
         "type": "Notification",
         "attrs": {
           "method": "textDocument/publishDiagnostics",
-          "params": "`PublishDiagnosticsParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/PublishDiagnosticsParams"
+          }
         }
       }
     },
@@ -1298,13 +1331,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/completion",
-          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+          "params": {
+            "$ref": "#/components/schemas/TextDocumentPositionParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`CompletionItem[] | CompletionList`"
+          "result": {
+            "$ref": "#/components/schemas/textDocumentCompletionResponse"
+          }
         }
       }
     },
@@ -1313,13 +1350,17 @@
         "type": "Request",
         "attrs": {
           "method": "completionItem/resolve",
-          "params": "`CompletionItem`"
+          "params": {
+            "$ref": "#/components/schemas/CompletionItem"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`CompletionItem`",
+          "result": {
+            "$ref": "#/components/schemas/CompletionItem"
+          },
           "error": "code and message set in case an exception happens during the completion resolve request."
         }
       }
@@ -1329,13 +1370,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/hover",
-          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+          "params": {
+            "$ref": "#/components/schemas/TextDocumentPositionParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`Hover` defined as follows:"
+          "result": {
+            "$ref": "#/components/schemas/Hover"
+          }
         }
       }
     },
@@ -1344,13 +1389,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/signatureHelp",
-          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+          "params": {
+            "$ref": "#/components/schemas/TextDocumentPositionParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`SignatureHelp` defined as follows:"
+          "result": {
+            "$ref": "#/components/schemas/SignatureHelp"
+          }
         }
       }
     },
@@ -1359,13 +1408,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/definition",
-          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+          "params": {
+            "$ref": "#/components/schemas/TextDocumentPositionParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`Location`](#location) | [`Location`](#location)[]",
+          "result": {
+            "$ref": "#/components/schemas/Location"
+          },
           "error": "code and message set in case an exception happens during the definition request."
         }
       }
@@ -1375,13 +1428,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/references",
-          "params": "`ReferenceParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/ReferenceParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`Location`](#location)[]",
+          "result": {
+            "$ref": "#/components/schemas/Location"
+          },
           "error": "code and message set in case an exception happens during the reference request."
         }
       }
@@ -1391,13 +1448,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/documentHighlight",
-          "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
+          "params": {
+            "$ref": "#/components/schemas/TextDocumentPositionParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`DocumentHighlight`[] defined as follows:"
+          "result": {
+            "$ref": "#/components/schemas/DocumentHighlight"
+          }
         }
       }
     },
@@ -1406,13 +1467,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/documentSymbol",
-          "params": "`DocumentSymbolParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/DocumentSymbolParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`SymbolInformation`[] defined as follows:"
+          "result": {
+            "$ref": "#/components/schemas/SymbolInformation"
+          }
         }
       }
     },
@@ -1421,13 +1486,17 @@
         "type": "Request",
         "attrs": {
           "method": "workspace/symbol",
-          "params": "`WorkspaceSymbolParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/WorkspaceSymbolParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`SymbolInformation[]` as defined above.",
+          "result": {
+            "$ref": "#/components/schemas/workspaceSymbolResponse"
+          },
           "error": "code and message set in case an exception happens during the workspace symbol request."
         }
       }
@@ -1437,13 +1506,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/codeAction",
-          "params": "`CodeActionParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/CodeActionParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`Command[]`](#command) defined as follows:",
+          "result": {
+            "$ref": "#/components/schemas/textDocumentCodeActionResponse"
+          },
           "error": "code and message set in case an exception happens during the code action request."
         }
       }
@@ -1453,13 +1526,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/codeLens",
-          "params": "`CodeLensParams` defined as follows:"
+          "params": {
+            "$ref": "#/components/schemas/CodeLensParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`CodeLens[]` defined as follows:"
+          "result": {
+            "$ref": "#/components/schemas/textDocumentCodeLensResponse"
+          }
         }
       }
     },
@@ -1468,13 +1545,17 @@
         "type": "Request",
         "attrs": {
           "method": "codeLens/resolve",
-          "params": "`CodeLens`"
+          "params": {
+            "$ref": "#/components/schemas/CodeLens"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`CodeLens`",
+          "result": {
+            "$ref": "#/components/schemas/CodeLens"
+          },
           "error": "code and message set in case an exception happens during the code lens resolve request."
         }
       }
@@ -1484,13 +1565,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/documentLink",
-          "params": "`DocumentLinkParams`, defined as follows"
+          "params": {
+            "$ref": "#/components/schemas/DocumentLinkParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "An array of `DocumentLink`, or `null` or `undefined`."
+          "result": {
+            "$ref": "#/components/schemas/DocumentLink"
+          }
         }
       }
     },
@@ -1499,13 +1584,17 @@
         "type": "Request",
         "attrs": {
           "method": "documentLink/resolve",
-          "params": "`DocumentLink`"
+          "params": {
+            "$ref": "#/components/schemas/DocumentLink"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "`DocumentLink`",
+          "result": {
+            "$ref": "#/components/schemas/DocumentLink"
+          },
           "error": "code and message set in case an exception happens during the document link resolve request."
         }
       }
@@ -1515,29 +1604,37 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/formatting",
-          "params": "`DocumentFormattingParams` defined as follows"
+          "params": {
+            "$ref": "#/components/schemas/DocumentFormattingParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`TextEdit[]`](#textedit) describing the modification to the document to be formatted.",
+          "result": {
+            "$ref": "#/components/schemas/textDocumentFormattingResponse"
+          },
           "error": "code and message set in case an exception happens during the formatting request."
         }
       }
     },
-    "textDocument/rangeFormatting',": {
+    "textDocument/rangeFormatting": {
       "request": {
         "type": "Request",
         "attrs": {
-          "method": "textDocument/rangeFormatting',",
-          "params": "`DocumentRangeFormattingParams` defined as follows"
+          "method": "textDocument/rangeFormatting",
+          "params": {
+            "$ref": "#/components/schemas/DocumentRangeFormattingParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`TextEdit[]`](#textedit) describing the modification to the document to be formatted.",
+          "result": {
+            "$ref": "#/components/schemas/textDocumentRangeFormattingResponse"
+          },
           "error": "code and message set in case an exception happens during the range formatting request."
         }
       }
@@ -1547,13 +1644,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/onTypeFormatting",
-          "params": "`DocumentOnTypeFormattingParams` defined as follows"
+          "params": {
+            "$ref": "#/components/schemas/DocumentOnTypeFormattingParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`TextEdit[]`](#textedit) describing the modification to the document.",
+          "result": {
+            "$ref": "#/components/schemas/textDocumentOnTypeFormattingResponse"
+          },
           "error": "code and message set in case an exception happens during the range formatting request."
         }
       }
@@ -1563,13 +1664,17 @@
         "type": "Request",
         "attrs": {
           "method": "textDocument/rename",
-          "params": "`RenameParams` defined as follows"
+          "params": {
+            "$ref": "#/components/schemas/RenameParams"
+          }
         }
       },
       "response": {
         "type": "Response",
         "attrs": {
-          "result": "[`WorkspaceEdit`](#workspaceedit) describing the modification to the workspace.",
+          "result": {
+            "$ref": "#/components/schemas/WorkspaceEdit"
+          },
           "error": "code and message set in case an exception happens during the rename request."
         }
       }

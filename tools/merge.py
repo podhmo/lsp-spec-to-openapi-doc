@@ -1,13 +1,11 @@
-import sys
 import argparse
-
-
 from dictknife import loading
 
 
 def merge(*, extracted, jsonschema):
     schemas = {}
     paths = extracted["paths"]
+
     for name, s in jsonschema["definitions"].items():
         if "$ref" in s:
             s["$ref"].replace("#definitions", "#/components/schemas")
@@ -15,6 +13,7 @@ def merge(*, extracted, jsonschema):
         else:
             s.pop("title", None)
             schemas[name] = s
+
     return {"components": {"schemas": schemas}, "paths": paths}
 
 

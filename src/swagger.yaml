@@ -1211,23 +1211,56 @@ components:
           title: query
       required:
       - query
+    textDocumentCodeActionResponse:
+      type: array
+      items:
+        $ref: '#/definitions/Command'
+    textDocumentCodeLensResponse:
+      type: array
+      items:
+        $ref: '#/definitions/CodeLens'
+    textDocumentCompletionResponse:
+      anyOf:
+      - $ref: '#/definitions/CompletionList'
+      - type: array
+        items:
+          $ref: '#/definitions/CompletionItem'
+    textDocumentFormattingResponse:
+      type: array
+      items:
+        $ref: '#/definitions/TextEdit'
+    textDocumentOnTypeFormattingResponse:
+      type: array
+      items:
+        $ref: '#/definitions/TextEdit'
+    textDocumentRangeFormattingResponse:
+      type: array
+      items:
+        $ref: '#/definitions/TextEdit'
+    workspaceSymbolResponse:
+      type: array
+      items:
+        $ref: '#/definitions/SymbolInformation'
 paths:
   $/cancelRequest:
     notification:
       type: Notification
       attrs:
         method: $/cancelRequest
-        params: '`CancelParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/CancelParams'
   initialize:
     request:
       type: Request
       attrs:
         method: initialize
-        params: '`InitializeParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/InitializeParams'
     response:
       type: Response
       attrs:
-        result: '`InitializeResult` defined as follows:'
+        result:
+          $ref: '#/components/schemas/InitializeResult'
   shutdown:
     request:
       type: Request
@@ -1250,17 +1283,20 @@ paths:
       type: Notification
       attrs:
         method: window/showMessage
-        params: '`ShowMessageParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/ShowMessageParams'
   window/showMessageRequest:
     request:
       type: Request
       attrs:
         method: window/showMessageRequest
-        params: '`ShowMessageRequestParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/ShowMessageRequestParams'
     response:
       type: Response
       attrs:
-        result: the selected `MessageActionItem`
+        result:
+          $ref: '#/components/schemas/MessageActionItem'
         error: code and message set in case an exception happens during showing a
           message.
   window/logMessage:
@@ -1268,69 +1304,80 @@ paths:
       type: Notification
       attrs:
         method: window/logMessage
-        params: '`LogMessageParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/LogMessageParams'
   telemetry/event:
     notification:
       type: Notification
       attrs:
         method: telemetry/event
         params: any
-  workspace/didChangeConfiguration',:
+  workspace/didChangeConfiguration:
     notification:
       type: Notification
       attrs:
-        method: workspace/didChangeConfiguration',
-        params: '`DidChangeConfigurationParams` defined as follows:'
+        method: workspace/didChangeConfiguration
+        params:
+          $ref: '#/components/schemas/DidChangeConfigurationParams'
   textDocument/didOpen:
     notification:
       type: Notification
       attrs:
         method: textDocument/didOpen
-        params: '`DidOpenTextDocumentParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/DidOpenTextDocumentParams'
   textDocument/didChange:
     notification:
       type: Notification
       attrs:
         method: textDocument/didChange
-        params: '`DidChangeTextDocumentParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/DidChangeTextDocumentParams'
   textDocument/didClose:
     notification:
       type: Notification
       attrs:
         method: textDocument/didClose
-        params: '`DidCloseTextDocumentParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/DidCloseTextDocumentParams'
   workspace/didChangeWatchedFiles:
     notification:
       type: Notification
       attrs:
         method: workspace/didChangeWatchedFiles
-        params: '`DidChangeWatchedFilesParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/DidChangeWatchedFilesParams'
   textDocument/publishDiagnostics:
     notification:
       type: Notification
       attrs:
         method: textDocument/publishDiagnostics
-        params: '`PublishDiagnosticsParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/PublishDiagnosticsParams'
   textDocument/completion:
     request:
       type: Request
       attrs:
         method: textDocument/completion
-        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+        params:
+          $ref: '#/components/schemas/TextDocumentPositionParams'
     response:
       type: Response
       attrs:
-        result: '`CompletionItem[] | CompletionList`'
+        result:
+          $ref: '#/components/schemas/textDocumentCompletionResponse'
   completionItem/resolve:
     request:
       type: Request
       attrs:
         method: completionItem/resolve
-        params: '`CompletionItem`'
+        params:
+          $ref: '#/components/schemas/CompletionItem'
     response:
       type: Response
       attrs:
-        result: '`CompletionItem`'
+        result:
+          $ref: '#/components/schemas/CompletionItem'
         error: code and message set in case an exception happens during the completion
           resolve request.
   textDocument/hover:
@@ -1338,31 +1385,37 @@ paths:
       type: Request
       attrs:
         method: textDocument/hover
-        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+        params:
+          $ref: '#/components/schemas/TextDocumentPositionParams'
     response:
       type: Response
       attrs:
-        result: '`Hover` defined as follows:'
+        result:
+          $ref: '#/components/schemas/Hover'
   textDocument/signatureHelp:
     request:
       type: Request
       attrs:
         method: textDocument/signatureHelp
-        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+        params:
+          $ref: '#/components/schemas/TextDocumentPositionParams'
     response:
       type: Response
       attrs:
-        result: '`SignatureHelp` defined as follows:'
+        result:
+          $ref: '#/components/schemas/SignatureHelp'
   textDocument/definition:
     request:
       type: Request
       attrs:
         method: textDocument/definition
-        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+        params:
+          $ref: '#/components/schemas/TextDocumentPositionParams'
     response:
       type: Response
       attrs:
-        result: '[`Location`](#location) | [`Location`](#location)[]'
+        result:
+          $ref: '#/components/schemas/Location'
         error: code and message set in case an exception happens during the definition
           request.
   textDocument/references:
@@ -1370,11 +1423,13 @@ paths:
       type: Request
       attrs:
         method: textDocument/references
-        params: '`ReferenceParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/ReferenceParams'
     response:
       type: Response
       attrs:
-        result: '[`Location`](#location)[]'
+        result:
+          $ref: '#/components/schemas/Location'
         error: code and message set in case an exception happens during the reference
           request.
   textDocument/documentHighlight:
@@ -1382,31 +1437,37 @@ paths:
       type: Request
       attrs:
         method: textDocument/documentHighlight
-        params: '[`TextDocumentPositionParams`](#textdocumentpositionparams)'
+        params:
+          $ref: '#/components/schemas/TextDocumentPositionParams'
     response:
       type: Response
       attrs:
-        result: '`DocumentHighlight`[] defined as follows:'
+        result:
+          $ref: '#/components/schemas/DocumentHighlight'
   textDocument/documentSymbol:
     request:
       type: Request
       attrs:
         method: textDocument/documentSymbol
-        params: '`DocumentSymbolParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/DocumentSymbolParams'
     response:
       type: Response
       attrs:
-        result: '`SymbolInformation`[] defined as follows:'
+        result:
+          $ref: '#/components/schemas/SymbolInformation'
   workspace/symbol:
     request:
       type: Request
       attrs:
         method: workspace/symbol
-        params: '`WorkspaceSymbolParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/WorkspaceSymbolParams'
     response:
       type: Response
       attrs:
-        result: '`SymbolInformation[]` as defined above.'
+        result:
+          $ref: '#/components/schemas/workspaceSymbolResponse'
         error: code and message set in case an exception happens during the workspace
           symbol request.
   textDocument/codeAction:
@@ -1414,11 +1475,13 @@ paths:
       type: Request
       attrs:
         method: textDocument/codeAction
-        params: '`CodeActionParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/CodeActionParams'
     response:
       type: Response
       attrs:
-        result: '[`Command[]`](#command) defined as follows:'
+        result:
+          $ref: '#/components/schemas/textDocumentCodeActionResponse'
         error: code and message set in case an exception happens during the code action
           request.
   textDocument/codeLens:
@@ -1426,21 +1489,25 @@ paths:
       type: Request
       attrs:
         method: textDocument/codeLens
-        params: '`CodeLensParams` defined as follows:'
+        params:
+          $ref: '#/components/schemas/CodeLensParams'
     response:
       type: Response
       attrs:
-        result: '`CodeLens[]` defined as follows:'
+        result:
+          $ref: '#/components/schemas/textDocumentCodeLensResponse'
   codeLens/resolve:
     request:
       type: Request
       attrs:
         method: codeLens/resolve
-        params: '`CodeLens`'
+        params:
+          $ref: '#/components/schemas/CodeLens'
     response:
       type: Response
       attrs:
-        result: '`CodeLens`'
+        result:
+          $ref: '#/components/schemas/CodeLens'
         error: code and message set in case an exception happens during the code lens
           resolve request.
   textDocument/documentLink:
@@ -1448,21 +1515,25 @@ paths:
       type: Request
       attrs:
         method: textDocument/documentLink
-        params: '`DocumentLinkParams`, defined as follows'
+        params:
+          $ref: '#/components/schemas/DocumentLinkParams'
     response:
       type: Response
       attrs:
-        result: An array of `DocumentLink`, or `null` or `undefined`.
+        result:
+          $ref: '#/components/schemas/DocumentLink'
   documentLink/resolve:
     request:
       type: Request
       attrs:
         method: documentLink/resolve
-        params: '`DocumentLink`'
+        params:
+          $ref: '#/components/schemas/DocumentLink'
     response:
       type: Response
       attrs:
-        result: '`DocumentLink`'
+        result:
+          $ref: '#/components/schemas/DocumentLink'
         error: code and message set in case an exception happens during the document
           link resolve request.
   textDocument/formatting:
@@ -1470,25 +1541,27 @@ paths:
       type: Request
       attrs:
         method: textDocument/formatting
-        params: '`DocumentFormattingParams` defined as follows'
+        params:
+          $ref: '#/components/schemas/DocumentFormattingParams'
     response:
       type: Response
       attrs:
-        result: '[`TextEdit[]`](#textedit) describing the modification to the document
-          to be formatted.'
+        result:
+          $ref: '#/components/schemas/textDocumentFormattingResponse'
         error: code and message set in case an exception happens during the formatting
           request.
-  textDocument/rangeFormatting',:
+  textDocument/rangeFormatting:
     request:
       type: Request
       attrs:
-        method: textDocument/rangeFormatting',
-        params: '`DocumentRangeFormattingParams` defined as follows'
+        method: textDocument/rangeFormatting
+        params:
+          $ref: '#/components/schemas/DocumentRangeFormattingParams'
     response:
       type: Response
       attrs:
-        result: '[`TextEdit[]`](#textedit) describing the modification to the document
-          to be formatted.'
+        result:
+          $ref: '#/components/schemas/textDocumentRangeFormattingResponse'
         error: code and message set in case an exception happens during the range
           formatting request.
   textDocument/onTypeFormatting:
@@ -1496,11 +1569,13 @@ paths:
       type: Request
       attrs:
         method: textDocument/onTypeFormatting
-        params: '`DocumentOnTypeFormattingParams` defined as follows'
+        params:
+          $ref: '#/components/schemas/DocumentOnTypeFormattingParams'
     response:
       type: Response
       attrs:
-        result: '[`TextEdit[]`](#textedit) describing the modification to the document.'
+        result:
+          $ref: '#/components/schemas/textDocumentOnTypeFormattingResponse'
         error: code and message set in case an exception happens during the range
           formatting request.
   textDocument/rename:
@@ -1508,11 +1583,12 @@ paths:
       type: Request
       attrs:
         method: textDocument/rename
-        params: '`RenameParams` defined as follows'
+        params:
+          $ref: '#/components/schemas/RenameParams'
     response:
       type: Response
       attrs:
-        result: '[`WorkspaceEdit`](#workspaceedit) describing the modification to
-          the workspace.'
+        result:
+          $ref: '#/components/schemas/WorkspaceEdit'
         error: code and message set in case an exception happens during the rename
           request.
