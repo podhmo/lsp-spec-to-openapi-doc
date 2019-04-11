@@ -8,7 +8,6 @@ components:
           type:
           - string
           - number
-          title: id
       required:
       - id
     ClientCapabilities:
@@ -24,7 +23,6 @@ components:
           type: array
           items:
             $ref: '#/definitions/Diagnostic'
-          title: diagnostics
       required:
       - diagnostics
     CodeActionParams:
@@ -34,15 +32,12 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document in which the command was invoked.
-          title: textDocument
         range:
           $ref: '#/definitions/Range'
           description: The range for which the command was invoked.
-          title: range
         context:
           $ref: '#/definitions/CodeActionContext'
           description: Context carrying additional information.
-          title: context
       required:
       - context
       - range
@@ -60,16 +55,13 @@ components:
           $ref: '#/definitions/Range'
           description: The range in which this code lens is valid. Should only span
             a single line.
-          title: range
         command:
           description: The command this code lens represents.
           $ref: '#/definitions/Command'
-          title: command
         data:
           description: |-
             A data entry field that is preserved on a code lens item between
             a code lens and a code lens resolve request.
-          title: data
       required:
       - range
     CodeLensOptions:
@@ -79,14 +71,12 @@ components:
         resolveProvider:
           description: Code lens has a resolve provider as well.
           type: boolean
-          title: resolveProvider
     CodeLensParams:
       type: object
       properties:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document to request code lens for.
-          title: textDocument
       required:
       - textDocument
     Command:
@@ -99,14 +89,12 @@ components:
         command:
           description: The identifier of the actual command handler.
           type: string
-          title: command
         arguments:
           description: |-
             Arguments that the command handler should be
             invoked with.
           type: array
           items: {}
-          title: arguments
       required:
       - command
       - title
@@ -119,48 +107,40 @@ components:
             also the text that is inserted when selecting
             this completion.
           type: string
-          title: label
         kind:
           description: |-
             The kind of this completion item. Based of the kind
             an icon is chosen by the editor.
           type: number
-          title: kind
         detail:
           description: |-
             A human-readable string with additional information
             about this item, like type or symbol information.
           type: string
-          title: detail
         documentation:
           description: A human-readable string that represents a doc-comment.
           type: string
-          title: documentation
         sortText:
           description: |-
             A string that should be used when comparing this item
             with other items. When `falsy` the label is used.
           type: string
-          title: sortText
         filterText:
           description: |-
             A string that should be used when filtering a set of
             completion items. When `falsy` the label is used.
           type: string
-          title: filterText
         insertText:
           description: |-
             A string that should be inserted a document when selecting
             this completion. When `falsy` the label is used.
           type: string
-          title: insertText
         textEdit:
           description: |-
             An edit which is applied to a document when selecting
             this completion. When an edit is provided the value of
             insertText is ignored.
           $ref: '#/definitions/TextEdit'
-          title: textEdit
         additionalTextEdits:
           description: |-
             An optional array of additional text edits that are applied when
@@ -169,19 +149,16 @@ components:
           type: array
           items:
             $ref: '#/definitions/TextEdit'
-          title: additionalTextEdits
         command:
           description: |-
             An optional command that is executed *after* inserting this completion. *Note* that
             additional modifications to the current document should be described with the
             additionalTextEdits-property.
           $ref: '#/definitions/Command'
-          title: command
         data:
           description: |-
             An data entry field that is preserved on a completion item between
             a completion and a completion resolve request.
-          title: data
       required:
       - label
     CompletionItemKind:
@@ -217,13 +194,11 @@ components:
             This list it not complete. Further typing should result in recomputing
             this list.
           type: boolean
-          title: isIncomplete
         items:
           description: The completion items.
           type: array
           items:
             $ref: '#/definitions/CompletionItem'
-          title: items
       required:
       - isIncomplete
       - items
@@ -235,13 +210,11 @@ components:
           description: The server provides support to resolve additional information
             for a completion item.
           type: boolean
-          title: resolveProvider
         triggerCharacters:
           description: The characters that trigger completion automatically.
           type: array
           items:
             type: string
-          title: triggerCharacters
     D:
       type: object
     Diagnostic:
@@ -250,29 +223,24 @@ components:
         range:
           $ref: '#/definitions/Range'
           description: The range at which the message applies.
-          title: range
         severity:
           description: |-
             The diagnostic's severity. Can be omitted. If omitted it is up to the
             client to interpret diagnostics as error, warning, info or hint.
           type: number
-          title: severity
         code:
           description: The diagnostic's code. Can be omitted.
           type:
           - string
           - number
-          title: code
         source:
           description: |-
             A human-readable string describing the source of this
             diagnostic, e.g. 'typescript' or 'super lint'.
           type: string
-          title: source
         message:
           description: The diagnostic's message.
           type: string
-          title: message
       required:
       - message
       - range
@@ -288,7 +256,6 @@ components:
       properties:
         settings:
           description: The actual changed settings
-          title: settings
       required:
       - settings
     DidChangeTextDocumentParams:
@@ -300,13 +267,11 @@ components:
             The document that did change. The version number points
             to the version after all provided content changes have
             been applied.
-          title: textDocument
         contentChanges:
           description: The actual content changes.
           type: array
           items:
             $ref: '#/definitions/TextDocumentContentChangeEvent'
-          title: contentChanges
       required:
       - contentChanges
       - textDocument
@@ -318,7 +283,6 @@ components:
           type: array
           items:
             $ref: '#/definitions/FileEvent'
-          title: changes
       required:
       - changes
     DidCloseTextDocumentParams:
@@ -327,7 +291,6 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document that was closed.
-          title: textDocument
       required:
       - textDocument
     DidOpenTextDocumentParams:
@@ -336,7 +299,6 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentItem'
           description: The document that was opened.
-          title: textDocument
       required:
       - textDocument
     DidSaveTextDocumentParams:
@@ -345,7 +307,6 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document that was saved.
-          title: textDocument
       required:
       - textDocument
     DocumentFormattingParams:
@@ -354,11 +315,9 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document to format.
-          title: textDocument
         options:
           $ref: '#/definitions/FormattingOptions'
           description: The format options.
-          title: options
       required:
       - options
       - textDocument
@@ -372,11 +331,9 @@ components:
         range:
           $ref: '#/definitions/Range'
           description: The range this highlight applies to.
-          title: range
         kind:
           description: The highlight kind, default is DocumentHighlightKind.Text.
           type: number
-          title: kind
       required:
       - range
     DocumentHighlightKind:
@@ -392,7 +349,6 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document to provide document links for.
-          title: textDocument
       required:
       - textDocument
     DocumentOnTypeFormattingOptions:
@@ -402,13 +358,11 @@ components:
         firstTriggerCharacter:
           description: A character on which formatting should be triggered, like `}`.
           type: string
-          title: firstTriggerCharacter
         moreTriggerCharacter:
           description: More trigger characters.
           type: array
           items:
             type: string
-          title: moreTriggerCharacter
       required:
       - firstTriggerCharacter
     DocumentOnTypeFormattingParams:
@@ -417,19 +371,15 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document to format.
-          title: textDocument
         position:
           $ref: '#/definitions/Position'
           description: The position at which this request was sent.
-          title: position
         ch:
           description: The character that has been typed.
           type: string
-          title: ch
         options:
           $ref: '#/definitions/FormattingOptions'
           description: The format options.
-          title: options
       required:
       - ch
       - options
@@ -441,15 +391,12 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document to format.
-          title: textDocument
         range:
           $ref: '#/definitions/Range'
           description: The range to format
-          title: range
         options:
           $ref: '#/definitions/FormattingOptions'
           description: The format options
-          title: options
       required:
       - options
       - range
@@ -460,7 +407,6 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The text document.
-          title: textDocument
       required:
       - textDocument
     FileChangeType:
@@ -477,11 +423,9 @@ components:
         uri:
           description: The file's URI.
           type: string
-          title: uri
         type:
           description: The change type.
           type: number
-          title: type
       required:
       - type
       - uri
@@ -497,11 +441,9 @@ components:
         tabSize:
           description: Size of a tab in spaces.
           type: number
-          title: tabSize
         insertSpaces:
           description: Prefer spaces over tabs.
           type: boolean
-          title: insertSpaces
       required:
       - insertSpaces
       - tabSize
@@ -516,10 +458,8 @@ components:
             properties:
               language:
                 type: string
-                title: language
               value:
                 type: string
-                title: value
             required:
             - language
             - value
@@ -530,21 +470,17 @@ components:
                 properties:
                   language:
                     type: string
-                    title: language
                   value:
                     type: string
-                    title: value
                 required:
                 - language
                 - value
               - type: string
           - type: string
-          title: contents
         range:
           description: "An optional range is a range inside a text document \nthat\
             \ is used to visualize a hover, e.g. by changing the background color."
           $ref: '#/definitions/Range'
-          title: range
       required:
       - contents
     InitializeError:
@@ -556,7 +492,6 @@ components:
             initialize request after showing the message provided
             in the ResponseError.
           type: boolean
-          title: retry
       required:
       - retry
     InitializeParams:
@@ -568,20 +503,16 @@ components:
             the server. Is null if the process has not been started by another process.
             If the parent process is not alive then the server should exit (see exit notification) its process.
           type: number
-          title: processId
         rootPath:
           description: |-
             The rootPath of the workspace. Is null
             if no folder is open.
           type: string
-          title: rootPath
         initializationOptions:
           description: User provided initialization options.
-          title: initializationOptions
         capabilities:
           $ref: '#/definitions/ClientCapabilities'
           description: The capabilities provided by the client (editor)
-          title: capabilities
       required:
       - capabilities
     InitializeResult:
@@ -590,7 +521,6 @@ components:
         capabilities:
           $ref: '#/definitions/ServerCapabilities'
           description: The capabilities the language server provides.
-          title: capabilities
       required:
       - capabilities
     Location:
@@ -598,10 +528,8 @@ components:
       properties:
         uri:
           type: string
-          title: uri
         range:
           $ref: '#/definitions/Range'
-          title: range
       required:
       - range
       - uri
@@ -611,11 +539,9 @@ components:
         type:
           description: The message type. See {@link MessageType}
           type: number
-          title: type
         message:
           description: The actual message
           type: string
-          title: message
       required:
       - message
       - type
@@ -625,10 +551,8 @@ components:
         properties:
           language:
             type: string
-            title: language
           value:
             type: string
-            title: value
         required:
         - language
         - value
@@ -638,7 +562,6 @@ components:
       properties:
         jsonrpc:
           type: string
-          title: jsonrpc
       required:
       - jsonrpc
     MessageActionItem:
@@ -663,13 +586,10 @@ components:
         method:
           description: The method to be invoked.
           type: string
-          title: method
         params:
           description: The notification's params.
-          title: params
         jsonrpc:
           type: string
-          title: jsonrpc
       required:
       - jsonrpc
       - method
@@ -684,13 +604,11 @@ components:
             The label of this parameter. Will be shown in
             the UI.
           type: string
-          title: label
         documentation:
           description: |-
             The human-readable doc-comment of this parameter. Will be shown
             in the UI but can be omitted.
           type: string
-          title: documentation
       required:
       - label
     Position:
@@ -699,11 +617,9 @@ components:
         line:
           description: Line position in a document (zero-based).
           type: number
-          title: line
         character:
           description: Character offset on a line in a document (zero-based).
           type: number
-          title: character
       required:
       - character
       - line
@@ -713,13 +629,11 @@ components:
         uri:
           description: The URI for which diagnostic information is reported.
           type: string
-          title: uri
         diagnostics:
           description: An array of diagnostic information items.
           type: array
           items:
             $ref: '#/definitions/Diagnostic'
-          title: diagnostics
       required:
       - diagnostics
       - uri
@@ -729,11 +643,9 @@ components:
         start:
           $ref: '#/definitions/Position'
           description: The range's start position.
-          title: start
         end:
           $ref: '#/definitions/Position'
           description: The range's end position.
-          title: end
       required:
       - end
       - start
@@ -743,7 +655,6 @@ components:
         includeDeclaration:
           description: Include the declaration of the current symbol.
           type: boolean
-          title: includeDeclaration
       required:
       - includeDeclaration
     ReferenceParams:
@@ -751,15 +662,12 @@ components:
       properties:
         context:
           $ref: '#/definitions/ReferenceContext'
-          title: context
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The text document.
-          title: textDocument
         position:
           $ref: '#/definitions/Position'
           description: The position inside the text document.
-          title: position
       required:
       - context
       - position
@@ -770,18 +678,15 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The document to format.
-          title: textDocument
         position:
           $ref: '#/definitions/Position'
           description: The position at which this request was sent.
-          title: position
         newName:
           description: |-
             The new name of the symbol. If the given name is not valid the
             request must return a [ResponseError](#ResponseError) with an
             appropriate message set.
           type: string
-          title: newName
       required:
       - newName
       - position
@@ -794,17 +699,13 @@ components:
           type:
           - string
           - number
-          title: id
         method:
           description: The method to be invoked.
           type: string
-          title: method
         params:
           description: The method's params.
-          title: params
         jsonrpc:
           type: string
-          title: jsonrpc
       required:
       - id
       - jsonrpc
@@ -817,17 +718,14 @@ components:
         code:
           description: A number indicating the error type that occurred.
           type: number
-          title: code
         message:
           description: A string providing a short description of the error.
           type: string
-          title: message
         data:
           description: |-
             A Primitive or Structured value that contains additional
             information about the error. Can be omitted.
           $ref: '#/definitions/D'
-          title: data
       required:
       - code
       - message
@@ -837,16 +735,13 @@ components:
         code:
           description: A number indicating the error type that occurred.
           type: number
-          title: code
         message:
           description: A string providing a short description of the error.
           type: string
-          title: message
         data:
           description: |-
             A Primitive or Structured value that contains additional
             information about the error. Can be omitted.
-          title: data
       required:
       - code
       - message
@@ -858,19 +753,15 @@ components:
           type:
           - string
           - number
-          title: id
         result:
           description: |-
             The result of a request. This can be omitted in
             the case of an error.
-          title: result
         error:
           description: The error object in case a request fails.
           $ref: '#/definitions/ResponseError<any>'
-          title: error
         jsonrpc:
           type: string
-          title: jsonrpc
       required:
       - id
       - jsonrpc
@@ -880,74 +771,57 @@ components:
         textDocumentSync:
           description: Defines how text documents are synced.
           type: number
-          title: textDocumentSync
         hoverProvider:
           description: The server provides hover support.
           type: boolean
-          title: hoverProvider
         completionProvider:
           description: The server provides completion support.
           $ref: '#/definitions/CompletionOptions'
-          title: completionProvider
         signatureHelpProvider:
           description: The server provides signature help support.
           $ref: '#/definitions/SignatureHelpOptions'
-          title: signatureHelpProvider
         definitionProvider:
           description: The server provides goto definition support.
           type: boolean
-          title: definitionProvider
         referencesProvider:
           description: The server provides find references support.
           type: boolean
-          title: referencesProvider
         documentHighlightProvider:
           description: The server provides document highlight support.
           type: boolean
-          title: documentHighlightProvider
         documentSymbolProvider:
           description: The server provides document symbol support.
           type: boolean
-          title: documentSymbolProvider
         workspaceSymbolProvider:
           description: The server provides workspace symbol support.
           type: boolean
-          title: workspaceSymbolProvider
         codeActionProvider:
           description: The server provides code actions.
           type: boolean
-          title: codeActionProvider
         codeLensProvider:
           description: The server provides code lens.
           $ref: '#/definitions/CodeLensOptions'
-          title: codeLensProvider
         documentFormattingProvider:
           description: The server provides document formatting.
           type: boolean
-          title: documentFormattingProvider
         documentRangeFormattingProvider:
           description: The server provides document range formatting.
           type: boolean
-          title: documentRangeFormattingProvider
         documentOnTypeFormattingProvider:
           description: The server provides document formatting on typing.
           $ref: '#/definitions/DocumentOnTypeFormattingOptions'
-          title: documentOnTypeFormattingProvider
         renameProvider:
           description: The server provides rename support.
           type: boolean
-          title: renameProvider
     ShowMessageParams:
       type: object
       properties:
         type:
           description: The message type. See {@link MessageType}.
           type: number
-          title: type
         message:
           description: The actual message.
           type: string
-          title: message
       required:
       - message
       - type
@@ -957,17 +831,14 @@ components:
         type:
           description: The message type. See {@link MessageType}
           type: number
-          title: type
         message:
           description: The actual message
           type: string
-          title: message
         actions:
           description: The message action items to present.
           type: array
           items:
             $ref: '#/definitions/MessageActionItem'
-          title: actions
       required:
       - message
       - type
@@ -983,15 +854,12 @@ components:
           type: array
           items:
             $ref: '#/definitions/SignatureInformation'
-          title: signatures
         activeSignature:
           description: The active signature.
           type: number
-          title: activeSignature
         activeParameter:
           description: The active parameter of the active signature.
           type: number
-          title: activeParameter
       required:
       - signatures
     SignatureHelpOptions:
@@ -1003,7 +871,6 @@ components:
           type: array
           items:
             type: string
-          title: triggerCharacters
     SignatureInformation:
       description: |-
         Represents the signature of something callable. A signature
@@ -1016,19 +883,16 @@ components:
             The label of this signature. Will be shown in
             the UI.
           type: string
-          title: label
         documentation:
           description: |-
             The human-readable doc-comment of this signature. Will be shown
             in the UI but can be omitted.
           type: string
-          title: documentation
         parameters:
           description: The parameters of this signature.
           type: array
           items:
             $ref: '#/definitions/ParameterInformation'
-          title: parameters
       required:
       - label
     SymbolInformation:
@@ -1040,19 +904,15 @@ components:
         name:
           description: The name of this symbol.
           type: string
-          title: name
         kind:
           description: The kind of this symbol.
           type: number
-          title: kind
         location:
           $ref: '#/definitions/Location'
           description: The location of this symbol.
-          title: location
         containerName:
           description: The name of the symbol containing this symbol.
           type: string
-          title: containerName
       required:
       - kind
       - location
@@ -1088,15 +948,12 @@ components:
         range:
           description: The range of the document that changed.
           $ref: '#/definitions/Range'
-          title: range
         rangeLength:
           description: The length of the range that got replaced.
           type: number
-          title: rangeLength
         text:
           description: The new text of the document.
           type: string
-          title: text
       required:
       - text
     TextDocumentIdentifier:
@@ -1105,7 +962,6 @@ components:
         uri:
           description: The text document's URI.
           type: string
-          title: uri
       required:
       - uri
     TextDocumentItem:
@@ -1114,21 +970,17 @@ components:
         uri:
           description: The text document's URI.
           type: string
-          title: uri
         languageId:
           description: The text document's language identifier.
           type: string
-          title: languageId
         version:
           description: |-
             The version number of this document (it will strictly increase after each
             change, including undo/redo).
           type: number
-          title: version
         text:
           description: The content of the opened text document.
           type: string
-          title: text
       required:
       - languageId
       - text
@@ -1140,11 +992,9 @@ components:
         textDocument:
           $ref: '#/definitions/TextDocumentIdentifier'
           description: The text document.
-          title: textDocument
         position:
           $ref: '#/definitions/Position'
           description: The position inside the text document.
-          title: position
       required:
       - position
       - textDocument
@@ -1164,13 +1014,11 @@ components:
           description: |-
             The range of the text document to be manipulated. To insert
             text into a document create a range where start === end.
-          title: range
         newText:
           description: |-
             The string to be inserted. For delete operations use an
             empty string.
           type: string
-          title: newText
       required:
       - newText
       - range
@@ -1180,11 +1028,9 @@ components:
         version:
           description: The version number of this document.
           type: number
-          title: version
         uri:
           description: The text document's URI.
           type: string
-          title: uri
       required:
       - uri
       - version
@@ -1198,7 +1044,6 @@ components:
             type: array
             items:
               $ref: '#/definitions/TextEdit'
-          title: changes
       required:
       - changes
     WorkspaceSymbolParams:
@@ -1208,7 +1053,6 @@ components:
         query:
           description: A non-empty query string
           type: string
-          title: query
       required:
       - query
     textDocumentCodeActionResponse:
