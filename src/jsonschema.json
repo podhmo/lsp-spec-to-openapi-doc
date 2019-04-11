@@ -1546,36 +1546,42 @@
             ]
         },
         "workspaceSymbolResponse": {
+            "description": "the Response of workspace/symbol",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/SymbolInformation"
             }
         },
         "textDocumentCodeActionResponse": {
+            "description": "the Response of textDocument/codeAction",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/Command"
             }
         },
         "textDocumentCodeLensResponse": {
+            "description": "the Response of textDocument/codeLens",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/CodeLens"
             }
         },
         "textDocumentFormattingResponse": {
+            "description": "the Response of textDocument/formatting",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/TextEdit"
             }
         },
         "textDocumentRangeFormattingResponse": {
+            "description": "the Response of textDocument/rangeFormatting",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/TextEdit"
             }
         },
         "textDocumentOnTypeFormattingResponse": {
+            "description": "the Response of textDocument/onTypeFormatting",
             "type": "array",
             "items": {
                 "$ref": "#/definitions/TextEdit"

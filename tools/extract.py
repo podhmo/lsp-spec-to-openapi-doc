@@ -66,7 +66,7 @@ def extract(data):
                                 schemas.append(
                                     textwrap.dedent(
                                         f"""
-                                    /* the {attrs[target]["type"]} of {name} */
+                                    /** the {attrs[target]["type"]} of {name} */
                                     type {typename} = {expression}
                                     """
                                     )

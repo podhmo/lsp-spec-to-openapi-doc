@@ -1006,24 +1006,24 @@ interface RenameParams {
 	newName: string;
 }
 
-/* the Response of textDocument/completion */
+/** the Response of textDocument/completion */
 type textDocumentCompletionResponse = CompletionItem[] | CompletionList
 
-/* the Response of workspace/symbol */
+/** the Response of workspace/symbol */
 type workspaceSymbolResponse = SymbolInformation[]
 
-/* the Response of textDocument/codeAction */
+/** the Response of textDocument/codeAction */
 type textDocumentCodeActionResponse = Command[]
 
-/* the Response of textDocument/codeLens */
+/** the Response of textDocument/codeLens */
 type textDocumentCodeLensResponse = CodeLens[]
 
-/* the Response of textDocument/formatting */
+/** the Response of textDocument/formatting */
 type textDocumentFormattingResponse = TextEdit[]
 
-/* the Response of textDocument/rangeFormatting */
+/** the Response of textDocument/rangeFormatting */
 type textDocumentRangeFormattingResponse = TextEdit[]
 
-/* the Response of textDocument/onTypeFormatting */
+/** the Response of textDocument/onTypeFormatting */
 type textDocumentOnTypeFormattingResponse = TextEdit[]
 

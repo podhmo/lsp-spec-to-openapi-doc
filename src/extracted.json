@@ -1144,13 +1144,13 @@
         "\tnewName: string;\n",
         "}\n"
       ],
-      "\n/* the Response of textDocument/completion */\ntype textDocumentCompletionResponse = CompletionItem[] | CompletionList\n",
-      "\n/* the Response of workspace/symbol */\ntype workspaceSymbolResponse = SymbolInformation[]\n",
-      "\n/* the Response of textDocument/codeAction */\ntype textDocumentCodeActionResponse = Command[]\n",
-      "\n/* the Response of textDocument/codeLens */\ntype textDocumentCodeLensResponse = CodeLens[]\n",
-      "\n/* the Response of textDocument/formatting */\ntype textDocumentFormattingResponse = TextEdit[]\n",
-      "\n/* the Response of textDocument/rangeFormatting */\ntype textDocumentRangeFormattingResponse = TextEdit[]\n",
-      "\n/* the Response of textDocument/onTypeFormatting */\ntype textDocumentOnTypeFormattingResponse = TextEdit[]\n"
+      "\n/** the Response of textDocument/completion */\ntype textDocumentCompletionResponse = CompletionItem[] | CompletionList\n",
+      "\n/** the Response of workspace/symbol */\ntype workspaceSymbolResponse = SymbolInformation[]\n",
+      "\n/** the Response of textDocument/codeAction */\ntype textDocumentCodeActionResponse = Command[]\n",
+      "\n/** the Response of textDocument/codeLens */\ntype textDocumentCodeLensResponse = CodeLens[]\n",
+      "\n/** the Response of textDocument/formatting */\ntype textDocumentFormattingResponse = TextEdit[]\n",
+      "\n/** the Response of textDocument/rangeFormatting */\ntype textDocumentRangeFormattingResponse = TextEdit[]\n",
+      "\n/** the Response of textDocument/onTypeFormatting */\ntype textDocumentOnTypeFormattingResponse = TextEdit[]\n"
     ]
   },
   "paths": {
