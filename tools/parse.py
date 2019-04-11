@@ -29,9 +29,11 @@ def parse(itr: io.TextIOBase):
     def _in_section(r, *, current_level):
         nonlocal itr
         buf = {"content": []}
+        others = []
         while True:
             for line in itr:
                 if line.startswith("#"):
+                    others = []
                     level = len(line) - len(line.lstrip("#"))
                     if level == current_level:
                         if buf["content"]:
@@ -52,15 +54,23 @@ def parse(itr: io.TextIOBase):
                     "_"
                 ):
                     buf["content"].append(
-                        {"type": line.strip(" _:\n"), "attrs": _in_types()}
+                        {
+                            "type": line.strip(" _:\n"),
+                            "attrs": _in_types(),
+                            "description": "".join(others).strip(),
+                        }
                     )
+                    others = []
                     break
                 elif line.lstrip(" ").startswith("```"):
+                    others = []
                     language = line.strip(" \t\n`")
                     lines = _in_code()
                     buf["content"].append(
                         {"type": "code", "language": language, "lines": lines}
                     )
+                else:
+                    others.append(line)
 
             else:
                 break

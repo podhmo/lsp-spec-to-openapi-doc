@@ -169,7 +169,8 @@
                           "attrs": {
                             "method": "$/cancelRequest",
                             "params": "`CancelParams` defined as follows:"
-                          }
+                          },
+                          "description": ">**New:** The base protocol now offers support for request cancellation. To cancel a request, a notification message with the following properties is sent:"
                         },
                         {
                           "type": "code",
@@ -526,7 +527,8 @@
                           "attrs": {
                             "method": "initialize",
                             "params": "`InitializeParams` defined as follows:"
-                          }
+                          },
+                          "description": "The initialize request is sent as the first request from the client to the server. If the server receives request or notification before the `initialize` request it should act as follows:\n\n* for a request the respond should be errored with `code: -32001`. The message can be picked by the server. \n* notifications should be dropped."
                         },
                         {
                           "type": "code",
@@ -570,7 +572,8 @@
                           "type": "Response",
                           "attrs": {
                             "result": "`InitializeResult` defined as follows:"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -770,14 +773,16 @@
                           "attrs": {
                             "method": "shutdown",
                             "params": "undefined"
-                          }
+                          },
+                          "description": "The shutdown request is sent from the client to the server. It asks the server to shut down, but to not exit (otherwise the response might not be delivered correctly to the client). There is a separate exit notification that asks the server to exit."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "undefined",
                             "error": "code and message set in case an exception happens during shutdown request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -790,7 +795,8 @@
                           "attrs": {
                             "method": "exit",
                             "params": "undefined"
-                          }
+                          },
+                          "description": "A notification to ask the server to exit its process.\nThe server should exit with `success` code 0 if the shutdown request has been received before; otherwise with `error` code 1."
                         }
                       ]
                     },
@@ -803,7 +809,8 @@
                           "attrs": {
                             "method": "window/showMessage",
                             "params": "`ShowMessageParams` defined as follows:"
-                          }
+                          },
+                          "description": "The show message notification is sent from a server to a client to ask the client to display a particular message in the user interface."
                         },
                         {
                           "type": "code",
@@ -857,14 +864,16 @@
                           "attrs": {
                             "method": "window/showMessageRequest",
                             "params": "`ShowMessageRequestParams` defined as follows:"
-                          }
+                          },
+                          "description": ">**New:** The show message request is sent from a server to a client to ask the client to display a particular message in the user interface. In addition to the show message notification the request allows to pass actions and to wait for an answer from the client."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "the selected `MessageActionItem`",
                             "error": "code and message set in case an exception happens during showing a message."
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -911,7 +920,8 @@
                           "attrs": {
                             "method": "window/logMessage",
                             "params": "`LogMessageParams` defined as follows:"
-                          }
+                          },
+                          "description": "The log message notification is sent from the server to the client to ask the client to log a particular message."
                         },
                         {
                           "type": "code",
@@ -941,7 +951,8 @@
                           "attrs": {
                             "method": "telemetry/event",
                             "params": "any"
-                          }
+                          },
+                          "description": ">**New:** The telemetry notification is sent from the server to the client to ask the client to log a telemetry event."
                         }
                       ]
                     },
@@ -954,7 +965,8 @@
                           "attrs": {
                             "method": "workspace/didChangeConfiguration",
                             "params": "`DidChangeConfigurationParams` defined as follows:"
-                          }
+                          },
+                          "description": "A notification sent from the client to the server to signal the change of configuration settings."
                         },
                         {
                           "type": "code",
@@ -979,7 +991,8 @@
                           "attrs": {
                             "method": "textDocument/didOpen",
                             "params": "`DidOpenTextDocumentParams` defined as follows:"
-                          }
+                          },
+                          "description": "The document open notification is sent from the client to the server to signal newly opened text documents. The document's truth is now managed by the client and the server must not try to read the document's truth using the document's uri."
                         },
                         {
                           "type": "code",
@@ -1004,7 +1017,8 @@
                           "attrs": {
                             "method": "textDocument/didChange",
                             "params": "`DidChangeTextDocumentParams` defined as follows:"
-                          }
+                          },
+                          "description": ">**Changed:** The document change notification is sent from the client to the server to signal changes to a text document. In 2.0 the shape of the params has changed to include proper version numbers and language ids."
                         },
                         {
                           "type": "code",
@@ -1062,7 +1076,8 @@
                           "attrs": {
                             "method": "textDocument/didClose",
                             "params": "`DidCloseTextDocumentParams` defined as follows:"
-                          }
+                          },
+                          "description": "The document close notification is sent from the client to the server when the document got closed in the client. The document's truth now exists where the document's uri points to (e.g. if the document's uri is a file uri the truth now exists on disk).\n\n>**Changed:** In 2.0 the params are of type `DidCloseTextDocumentParams` which contains a reference to a text document."
                         },
                         {
                           "type": "code",
@@ -1105,7 +1120,8 @@
                           "attrs": {
                             "method": "workspace/didChangeWatchedFiles",
                             "params": "`DidChangeWatchedFilesParams` defined as follows:"
-                          }
+                          },
+                          "description": "The watched files notification is sent from the client to the server when the client detects changes to files watched by the language client."
                         },
                         {
                           "type": "code",
@@ -1172,7 +1188,8 @@
                           "attrs": {
                             "method": "textDocument/publishDiagnostics",
                             "params": "`PublishDiagnosticsParams` defined as follows:"
-                          }
+                          },
+                          "description": "Diagnostics notification are sent from the server to the client to signal results of validation runs."
                         },
                         {
                           "type": "code",
@@ -1202,13 +1219,15 @@
                           "attrs": {
                             "method": "textDocument/completion",
                             "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
-                          }
+                          },
+                          "description": "The Completion request is sent from the client to the server to compute completion items at a given cursor position. Completion items are presented in the [IntelliSense](https://code.visualstudio.com/docs/editor/editingevolved#_intellisense) user interface. If computing full completion items is expensive, servers can additionally provide a handler for the completion item resolve request ('completionItem/resolve'). This request is sent when a completion item is selected in the user interface. A typically use case is for example: the 'textDocument/completion' request doesn't fill in the `documentation` property for returned completion items since it is expensive to compute. When the item is selected in the user interface then a 'completionItem/resolve' request is sent with the selected completion item as a param. The returned completion item should have the documentation property filled in.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with a proper `textDocument` and `position` property. In 1.0 the uri of the referenced text document was inlined into the params object."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`CompletionItem[] | CompletionList`"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1337,14 +1356,16 @@
                           "attrs": {
                             "method": "completionItem/resolve",
                             "params": "`CompletionItem`"
-                          }
+                          },
+                          "description": "The request is sent from the client to the server to resolve additional information for a given completion item."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`CompletionItem`",
                             "error": "code and message set in case an exception happens during the completion resolve request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1357,13 +1378,15 @@
                           "attrs": {
                             "method": "textDocument/hover",
                             "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
-                          }
+                          },
+                          "description": "The hover request is sent from the client to the server to request hover information at a given text document position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with a proper `textDocument` and `position` property. In 1.0 the uri of the referenced text document was inlined into the params object."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`Hover` defined as follows:"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1414,13 +1437,15 @@
                           "attrs": {
                             "method": "textDocument/signatureHelp",
                             "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
-                          }
+                          },
+                          "description": "The signature help request is sent from the client to the server to request signature information at a given cursor position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`SignatureHelp` defined as follows:"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1512,14 +1537,16 @@
                           "attrs": {
                             "method": "textDocument/definition",
                             "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
-                          }
+                          },
+                          "description": "The goto definition request is sent from the client to the server to resolve the definition location of a symbol at a given text document position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "[`Location`](#location) | [`Location`](#location)[]",
                             "error": "code and message set in case an exception happens during the definition request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1532,7 +1559,8 @@
                           "attrs": {
                             "method": "textDocument/references",
                             "params": "`ReferenceParams` defined as follows:"
-                          }
+                          },
+                          "description": "The references request is sent from the client to the server to resolve project-wide references for the symbol denoted by the given text document position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
                         },
                         {
                           "type": "code",
@@ -1560,7 +1588,8 @@
                           "attrs": {
                             "result": "[`Location`](#location)[]",
                             "error": "code and message set in case an exception happens during the reference request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1573,13 +1602,15 @@
                           "attrs": {
                             "method": "textDocument/documentHighlight",
                             "params": "[`TextDocumentPositionParams`](#textdocumentpositionparams)"
-                          }
+                          },
+                          "description": "The document highlight request is sent from the client to the server to resolve a document highlights for a given text document position.\nFor programming languages this usually highlights all references to the symbol scoped to this file. However we kept 'textDocument/documentHighlight' \nand 'textDocument/references' separate requests since the first one is allowed to be more fuzzy. Symbol matches usually have a `DocumentHighlightKind`\nof `Read` or `Write` whereas fuzzy or textual matches use `Text`as the kind.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`DocumentHighlight`[] defined as follows:"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1640,7 +1671,8 @@
                           "attrs": {
                             "method": "textDocument/documentSymbol",
                             "params": "`DocumentSymbolParams` defined as follows:"
-                          }
+                          },
+                          "description": "The document symbol request is sent from the client to the server to list all symbols found in a given text document.\n\n>**Changed:** In 2.0 the request uses `DocumentSymbolParams` instead of a single uri."
                         },
                         {
                           "type": "code",
@@ -1658,7 +1690,8 @@
                           "type": "Response",
                           "attrs": {
                             "result": "`SymbolInformation`[] defined as follows:"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1731,7 +1764,8 @@
                           "attrs": {
                             "method": "workspace/symbol",
                             "params": "`WorkspaceSymbolParams` defined as follows:"
-                          }
+                          },
+                          "description": "The workspace symbol request is sent from the client to the server to list project-wide symbols matching the query string."
                         },
                         {
                           "type": "code",
@@ -1753,7 +1787,8 @@
                           "attrs": {
                             "result": "`SymbolInformation[]` as defined above.",
                             "error": "code and message set in case an exception happens during the workspace symbol request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1766,7 +1801,8 @@
                           "attrs": {
                             "method": "textDocument/codeAction",
                             "params": "`CodeActionParams` defined as follows:"
-                          }
+                          },
+                          "description": "The code action request is sent from the client to the server to compute commands for a given text document and range. The request is triggered when the user moves the cursor into a problem marker in the editor or presses the lightbulb associated with a marker."
                         },
                         {
                           "type": "code",
@@ -1814,7 +1850,8 @@
                           "attrs": {
                             "result": "[`Command[]`](#command) defined as follows:",
                             "error": "code and message set in case an exception happens during the code action request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1827,7 +1864,8 @@
                           "attrs": {
                             "method": "textDocument/codeLens",
                             "params": "`CodeLensParams` defined as follows:"
-                          }
+                          },
+                          "description": "The code lens request is sent from the client to the server to compute code lenses for a given text document.\n\n>**Changed:** In 2.0 the request uses `CodeLensParams` instead of a single uri."
                         },
                         {
                           "type": "code",
@@ -1845,7 +1883,8 @@
                           "type": "Response",
                           "attrs": {
                             "result": "`CodeLens[]` defined as follows:"
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1888,14 +1927,16 @@
                           "attrs": {
                             "method": "codeLens/resolve",
                             "params": "`CodeLens`"
-                          }
+                          },
+                          "description": "The code lens resolve request is sent from the client to the server to resolve the command for a given code lens item."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`CodeLens`",
                             "error": "code and message set in case an exception happens during the code lens resolve request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1908,7 +1949,8 @@
                           "attrs": {
                             "method": "textDocument/documentLink",
                             "params": "`DocumentLinkParams`, defined as follows"
-                          }
+                          },
+                          "description": "The document links request is sent from the client to the server to request the location of links in a document."
                         },
                         {
                           "type": "code",
@@ -1926,7 +1968,8 @@
                           "type": "Response",
                           "attrs": {
                             "result": "An array of `DocumentLink`, or `null` or `undefined`."
-                          }
+                          },
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1959,14 +2002,16 @@
                           "attrs": {
                             "method": "documentLink/resolve",
                             "params": "`DocumentLink`"
-                          }
+                          },
+                          "description": "The document link resolve request is sent from the client to the server to resolve the target of a given document link."
                         },
                         {
                           "type": "Response",
                           "attrs": {
                             "result": "`DocumentLink`",
                             "error": "code and message set in case an exception happens during the document link resolve request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -1979,7 +2024,8 @@
                           "attrs": {
                             "method": "textDocument/formatting",
                             "params": "`DocumentFormattingParams` defined as follows"
-                          }
+                          },
+                          "description": "The document formatting request is sent from the server to the client to format a whole document."
                         },
                         {
                           "type": "code",
@@ -2028,7 +2074,8 @@
                           "attrs": {
                             "result": "[`TextEdit[]`](#textedit) describing the modification to the document to be formatted.",
                             "error": "code and message set in case an exception happens during the formatting request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -2041,7 +2088,8 @@
                           "attrs": {
                             "method": "textDocument/rangeFormatting",
                             "params": "`DocumentRangeFormattingParams` defined as follows"
-                          }
+                          },
+                          "description": "The document range formatting request is sent from the client to the server to format a given range in a document."
                         },
                         {
                           "type": "code",
@@ -2070,7 +2118,8 @@
                           "attrs": {
                             "result": "[`TextEdit[]`](#textedit) describing the modification to the document to be formatted.",
                             "error": "code and message set in case an exception happens during the range formatting request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -2083,7 +2132,8 @@
                           "attrs": {
                             "method": "textDocument/onTypeFormatting",
                             "params": "`DocumentOnTypeFormattingParams` defined as follows"
-                          }
+                          },
+                          "description": "The document on type formatting request is sent from the client to the server to format parts of the document during typing."
                         },
                         {
                           "type": "code",
@@ -2117,7 +2167,8 @@
                           "attrs": {
                             "result": "[`TextEdit[]`](#textedit) describing the modification to the document.",
                             "error": "code and message set in case an exception happens during the range formatting request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     },
@@ -2130,7 +2181,8 @@
                           "attrs": {
                             "method": "textDocument/rename",
                             "params": "`RenameParams` defined as follows"
-                          }
+                          },
+                          "description": "The rename request is sent from the client to the server to perform a workspace-wide rename of a symbol."
                         },
                         {
                           "type": "code",
@@ -2161,7 +2213,8 @@
                           "attrs": {
                             "result": "[`WorkspaceEdit`](#workspaceedit) describing the modification to the workspace.",
                             "error": "code and message set in case an exception happens during the rename request."
-                          }
+                          },
+                          "description": ""
                         }
                       ]
                     }

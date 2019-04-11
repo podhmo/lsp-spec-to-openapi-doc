@@ -28,7 +28,12 @@ def extract(data):
         for row in data:
             if isinstance(row, list):
                 _extract_paths(row)  # xxx
-            elif row["type"] == "Request":
+                continue
+
+            if not row.get("description"):
+                row.pop("description", None)
+
+            if row["type"] == "Request":
                 prev_request = row
                 paths[row["attrs"]["method"]] = {"request": row}
             elif row["type"] == "Response":
@@ -58,11 +63,14 @@ def extract(data):
                                     definition_name_from_method_name(name)
                                     + attrs[target]["type"]
                                 )
-                                schemas.append(textwrap.dedent(
-                                    f"""
+                                schemas.append(
+                                    textwrap.dedent(
+                                        f"""
                                     /* the {attrs[target]["type"]} of {name} */
                                     type {typename} = {expression}
-                                    """))
+                                    """
+                                    )
+                                )
 
                                 target_attrs[pos] = {
                                     "$ref": f"#/components/schemas/{typename}"

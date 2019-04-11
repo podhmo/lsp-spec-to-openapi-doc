@@ -1162,7 +1162,8 @@
           "params": {
             "$ref": "#/components/schemas/CancelParams"
           }
-        }
+        },
+        "description": ">**New:** The base protocol now offers support for request cancellation. To cancel a request, a notification message with the following properties is sent:"
       }
     },
     "initialize": {
@@ -1173,7 +1174,8 @@
           "params": {
             "$ref": "#/components/schemas/InitializeParams"
           }
-        }
+        },
+        "description": "The initialize request is sent as the first request from the client to the server. If the server receives request or notification before the `initialize` request it should act as follows:\n\n* for a request the respond should be errored with `code: -32001`. The message can be picked by the server. \n* notifications should be dropped."
       },
       "response": {
         "type": "Response",
@@ -1190,7 +1192,8 @@
         "attrs": {
           "method": "shutdown",
           "params": "undefined"
-        }
+        },
+        "description": "The shutdown request is sent from the client to the server. It asks the server to shut down, but to not exit (otherwise the response might not be delivered correctly to the client). There is a separate exit notification that asks the server to exit."
       },
       "response": {
         "type": "Response",
@@ -1206,7 +1209,8 @@
         "attrs": {
           "method": "exit",
           "params": "undefined"
-        }
+        },
+        "description": "A notification to ask the server to exit its process.\nThe server should exit with `success` code 0 if the shutdown request has been received before; otherwise with `error` code 1."
       }
     },
     "window/showMessage": {
@@ -1217,7 +1221,8 @@
           "params": {
             "$ref": "#/components/schemas/ShowMessageParams"
           }
-        }
+        },
+        "description": "The show message notification is sent from a server to a client to ask the client to display a particular message in the user interface."
       }
     },
     "window/showMessageRequest": {
@@ -1228,7 +1233,8 @@
           "params": {
             "$ref": "#/components/schemas/ShowMessageRequestParams"
           }
-        }
+        },
+        "description": ">**New:** The show message request is sent from a server to a client to ask the client to display a particular message in the user interface. In addition to the show message notification the request allows to pass actions and to wait for an answer from the client."
       },
       "response": {
         "type": "Response",
@@ -1248,7 +1254,8 @@
           "params": {
             "$ref": "#/components/schemas/LogMessageParams"
           }
-        }
+        },
+        "description": "The log message notification is sent from the server to the client to ask the client to log a particular message."
       }
     },
     "telemetry/event": {
@@ -1257,7 +1264,8 @@
         "attrs": {
           "method": "telemetry/event",
           "params": "any"
-        }
+        },
+        "description": ">**New:** The telemetry notification is sent from the server to the client to ask the client to log a telemetry event."
       }
     },
     "workspace/didChangeConfiguration": {
@@ -1268,7 +1276,8 @@
           "params": {
             "$ref": "#/components/schemas/DidChangeConfigurationParams"
           }
-        }
+        },
+        "description": "A notification sent from the client to the server to signal the change of configuration settings."
       }
     },
     "textDocument/didOpen": {
@@ -1279,7 +1288,8 @@
           "params": {
             "$ref": "#/components/schemas/DidOpenTextDocumentParams"
           }
-        }
+        },
+        "description": "The document open notification is sent from the client to the server to signal newly opened text documents. The document's truth is now managed by the client and the server must not try to read the document's truth using the document's uri."
       }
     },
     "textDocument/didChange": {
@@ -1290,7 +1300,8 @@
           "params": {
             "$ref": "#/components/schemas/DidChangeTextDocumentParams"
           }
-        }
+        },
+        "description": ">**Changed:** The document change notification is sent from the client to the server to signal changes to a text document. In 2.0 the shape of the params has changed to include proper version numbers and language ids."
       }
     },
     "textDocument/didClose": {
@@ -1301,7 +1312,8 @@
           "params": {
             "$ref": "#/components/schemas/DidCloseTextDocumentParams"
           }
-        }
+        },
+        "description": "The document close notification is sent from the client to the server when the document got closed in the client. The document's truth now exists where the document's uri points to (e.g. if the document's uri is a file uri the truth now exists on disk).\n\n>**Changed:** In 2.0 the params are of type `DidCloseTextDocumentParams` which contains a reference to a text document."
       }
     },
     "workspace/didChangeWatchedFiles": {
@@ -1312,7 +1324,8 @@
           "params": {
             "$ref": "#/components/schemas/DidChangeWatchedFilesParams"
           }
-        }
+        },
+        "description": "The watched files notification is sent from the client to the server when the client detects changes to files watched by the language client."
       }
     },
     "textDocument/publishDiagnostics": {
@@ -1323,7 +1336,8 @@
           "params": {
             "$ref": "#/components/schemas/PublishDiagnosticsParams"
           }
-        }
+        },
+        "description": "Diagnostics notification are sent from the server to the client to signal results of validation runs."
       }
     },
     "textDocument/completion": {
@@ -1334,7 +1348,8 @@
           "params": {
             "$ref": "#/components/schemas/TextDocumentPositionParams"
           }
-        }
+        },
+        "description": "The Completion request is sent from the client to the server to compute completion items at a given cursor position. Completion items are presented in the [IntelliSense](https://code.visualstudio.com/docs/editor/editingevolved#_intellisense) user interface. If computing full completion items is expensive, servers can additionally provide a handler for the completion item resolve request ('completionItem/resolve'). This request is sent when a completion item is selected in the user interface. A typically use case is for example: the 'textDocument/completion' request doesn't fill in the `documentation` property for returned completion items since it is expensive to compute. When the item is selected in the user interface then a 'completionItem/resolve' request is sent with the selected completion item as a param. The returned completion item should have the documentation property filled in.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with a proper `textDocument` and `position` property. In 1.0 the uri of the referenced text document was inlined into the params object."
       },
       "response": {
         "type": "Response",
@@ -1353,7 +1368,8 @@
           "params": {
             "$ref": "#/components/schemas/CompletionItem"
           }
-        }
+        },
+        "description": "The request is sent from the client to the server to resolve additional information for a given completion item."
       },
       "response": {
         "type": "Response",
@@ -1373,7 +1389,8 @@
           "params": {
             "$ref": "#/components/schemas/TextDocumentPositionParams"
           }
-        }
+        },
+        "description": "The hover request is sent from the client to the server to request hover information at a given text document position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with a proper `textDocument` and `position` property. In 1.0 the uri of the referenced text document was inlined into the params object."
       },
       "response": {
         "type": "Response",
@@ -1392,7 +1409,8 @@
           "params": {
             "$ref": "#/components/schemas/TextDocumentPositionParams"
           }
-        }
+        },
+        "description": "The signature help request is sent from the client to the server to request signature information at a given cursor position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
       },
       "response": {
         "type": "Response",
@@ -1411,7 +1429,8 @@
           "params": {
             "$ref": "#/components/schemas/TextDocumentPositionParams"
           }
-        }
+        },
+        "description": "The goto definition request is sent from the client to the server to resolve the definition location of a symbol at a given text document position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
       },
       "response": {
         "type": "Response",
@@ -1431,7 +1450,8 @@
           "params": {
             "$ref": "#/components/schemas/ReferenceParams"
           }
-        }
+        },
+        "description": "The references request is sent from the client to the server to resolve project-wide references for the symbol denoted by the given text document position.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
       },
       "response": {
         "type": "Response",
@@ -1451,7 +1471,8 @@
           "params": {
             "$ref": "#/components/schemas/TextDocumentPositionParams"
           }
-        }
+        },
+        "description": "The document highlight request is sent from the client to the server to resolve a document highlights for a given text document position.\nFor programming languages this usually highlights all references to the symbol scoped to this file. However we kept 'textDocument/documentHighlight' \nand 'textDocument/references' separate requests since the first one is allowed to be more fuzzy. Symbol matches usually have a `DocumentHighlightKind`\nof `Read` or `Write` whereas fuzzy or textual matches use `Text`as the kind.\n\n>**Changed:** In 2.0 the request uses `TextDocumentPositionParams` with proper `textDocument` and `position` properties. In 1.0 the uri of the referenced text document was inlined into the params object."
       },
       "response": {
         "type": "Response",
@@ -1470,7 +1491,8 @@
           "params": {
             "$ref": "#/components/schemas/DocumentSymbolParams"
           }
-        }
+        },
+        "description": "The document symbol request is sent from the client to the server to list all symbols found in a given text document.\n\n>**Changed:** In 2.0 the request uses `DocumentSymbolParams` instead of a single uri."
       },
       "response": {
         "type": "Response",
@@ -1489,7 +1511,8 @@
           "params": {
             "$ref": "#/components/schemas/WorkspaceSymbolParams"
           }
-        }
+        },
+        "description": "The workspace symbol request is sent from the client to the server to list project-wide symbols matching the query string."
       },
       "response": {
         "type": "Response",
@@ -1509,7 +1532,8 @@
           "params": {
             "$ref": "#/components/schemas/CodeActionParams"
           }
-        }
+        },
+        "description": "The code action request is sent from the client to the server to compute commands for a given text document and range. The request is triggered when the user moves the cursor into a problem marker in the editor or presses the lightbulb associated with a marker."
       },
       "response": {
         "type": "Response",
@@ -1529,7 +1553,8 @@
           "params": {
             "$ref": "#/components/schemas/CodeLensParams"
           }
-        }
+        },
+        "description": "The code lens request is sent from the client to the server to compute code lenses for a given text document.\n\n>**Changed:** In 2.0 the request uses `CodeLensParams` instead of a single uri."
       },
       "response": {
         "type": "Response",
@@ -1548,7 +1573,8 @@
           "params": {
             "$ref": "#/components/schemas/CodeLens"
           }
-        }
+        },
+        "description": "The code lens resolve request is sent from the client to the server to resolve the command for a given code lens item."
       },
       "response": {
         "type": "Response",
@@ -1568,7 +1594,8 @@
           "params": {
             "$ref": "#/components/schemas/DocumentLinkParams"
           }
-        }
+        },
+        "description": "The document links request is sent from the client to the server to request the location of links in a document."
       },
       "response": {
         "type": "Response",
@@ -1587,7 +1614,8 @@
           "params": {
             "$ref": "#/components/schemas/DocumentLink"
           }
-        }
+        },
+        "description": "The document link resolve request is sent from the client to the server to resolve the target of a given document link."
       },
       "response": {
         "type": "Response",
@@ -1607,7 +1635,8 @@
           "params": {
             "$ref": "#/components/schemas/DocumentFormattingParams"
           }
-        }
+        },
+        "description": "The document formatting request is sent from the server to the client to format a whole document."
       },
       "response": {
         "type": "Response",
@@ -1627,7 +1656,8 @@
           "params": {
             "$ref": "#/components/schemas/DocumentRangeFormattingParams"
           }
-        }
+        },
+        "description": "The document range formatting request is sent from the client to the server to format a given range in a document."
       },
       "response": {
         "type": "Response",
@@ -1647,7 +1677,8 @@
           "params": {
             "$ref": "#/components/schemas/DocumentOnTypeFormattingParams"
           }
-        }
+        },
+        "description": "The document on type formatting request is sent from the client to the server to format parts of the document during typing."
       },
       "response": {
         "type": "Response",
@@ -1667,7 +1698,8 @@
           "params": {
             "$ref": "#/components/schemas/RenameParams"
           }
-        }
+        },
+        "description": "The rename request is sent from the client to the server to perform a workspace-wide rename of a symbol."
       },
       "response": {
         "type": "Response",
