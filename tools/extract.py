@@ -21,6 +21,8 @@ def extract(data):
             elif row["type"] == "section":
                 _extract_schema(row["content"])
             elif row["type"] == "code" and row["language"] == "typescript":
+                if row.get("description"):
+                    schemas.append(row["description"])
                 schemas.append(row["lines"])
 
     def _extract_paths(data):

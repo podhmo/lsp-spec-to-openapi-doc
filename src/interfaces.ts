@@ -1,6 +1,16 @@
+/**
+ * 
+ * A general message as defined by JSON-RPC. The language server protocol always uses "2.0" as the jsonrpc version.
+ * 
+ */
 interface Message {
 	jsonrpc: string;
 }
+/**
+ * 
+ * A request message to describe a request between the client and the server. Every processed request must send a response back to the sender of the request.
+ * 
+ */
 interface RequestMessage extends Message {
 
 	/**
@@ -18,6 +28,11 @@ interface RequestMessage extends Message {
 	 */
 	params?: any
 }
+/**
+ * 
+ * Response Message sent as a result of a request.
+ * 
+ */
 interface ResponseMessage extends Message {
 	/**
 	 * The request id.
@@ -63,6 +78,11 @@ export namespace ErrorCodes {
 	export const serverErrorStart: number = -32099;
 	export const serverErrorEnd: number = -32000;
 }
+/**
+ * 
+ * A notification message. A processed notification message must not send a response back. They work like events.
+ * 
+ */
 interface NotificationMessage extends Message {
 	/**
 	 * The method to be invoked.
@@ -80,6 +100,11 @@ interface CancelParams {
 	 */
 	id: number | string;
 }
+/**
+ * 
+ * Position in a text document expressed as zero-based line and character offset. A position is between two characters like an 'insert' cursor in a editor.
+ * 
+ */
 interface Position {
 	/**
 	 * Line position in a document (zero-based).
@@ -91,6 +116,11 @@ interface Position {
 	 */
 	character: number;
 }
+/**
+ * 
+ * A range in a text document expressed as (zero-based) start and end positions. A range is comparable to a selection in an editor. Therefore the end position is exclusive.
+ * 
+ */
 interface Range {
 	/**
 	 * The range's start position.
@@ -102,10 +132,19 @@ interface Range {
 	 */
 	end: Position;
 }
+/**
+ * 
+ * Represents a location inside a resource, such as a line inside a text file.
+ */
 interface Location {
 	uri: string;
 	range: Range;
 }
+/**
+ * 
+ * Represents a diagnostic, such as a compiler error or warning. Diagnostic objects are only valid in the scope of a resource.
+ * 
+ */
 interface Diagnostic {
 	/**
 	 * The range at which the message applies.
@@ -134,6 +173,11 @@ interface Diagnostic {
 	 */
 	message: string;
 }
+/**
+ * 
+ * The protocol currently supports the following diagnostic severities:
+ * 
+ */
 enum DiagnosticSeverity {
 	/**
 	 * Reports an error.
@@ -152,6 +196,11 @@ enum DiagnosticSeverity {
 	 */
 	Hint = 4
 }
+/**
+ * 
+ * Represents a reference to a command. Provides a title which will be used to represent a command in the UI. Commands are identitifed using a string identifier and the protocol currently doesn't specify a set of well known commands. So executing a command requires some tool extension code.
+ * 
+ */
 interface Command {
 	/**
 	 * Title of the command, like `save`.
@@ -167,6 +216,11 @@ interface Command {
 	 */
 	arguments?: any[];
 }
+/**
+ * 
+ * A textual edit applicable to a text document.
+ * 
+ */
 interface TextEdit {
 	/**
 	 * The range of the text document to be manipulated. To insert
@@ -180,18 +234,32 @@ interface TextEdit {
 	 */
 	newText: string;
 }
+/**
+ * 
+ * A workspace edit represents changes to many resources managed in the workspace.
+ * 
+ */
 interface WorkspaceEdit {
 	/**
 	 * Holds changes to existing resources.
 	 */
 	changes: { [uri: string]: TextEdit[]; };
 }
+/**
+ * 
+ * Text documents are identified using a URI. On the protocol level, URIs are passed as strings. The corresponding JSON structure looks like this:
+ */
 interface TextDocumentIdentifier {
 	/**
 	 * The text document's URI.
 	 */
 	uri: string;
 }
+/**
+ * 
+ * >**New:** An item to transfer a text document from the client to the server.
+ * 
+ */
 interface TextDocumentItem {
 	/**
 	 * The text document's URI.
@@ -214,12 +282,24 @@ interface TextDocumentItem {
 	 */
 	text: string;
 }
+/**
+ * 
+ * >**New:** An identifier to denote a specific version of a text document.
+ * 
+ */
 interface VersionedTextDocumentIdentifier extends TextDocumentIdentifier {
 	/**
 	 * The version number of this document.
 	 */
 	version: number;
 }
+/**
+ * 
+ * >**Changed:** Was `TextDocumentPosition` in 1.0 with inlined parameters
+ * 
+ * A parameter literal used in requests to pass a text document and a position inside that document.
+ * 
+ */
 interface TextDocumentPositionParams {
 	/**
 	 * The text document.
@@ -509,6 +589,13 @@ interface DidCloseTextDocumentParams {
 	 */
 	textDocument: TextDocumentIdentifier;
 }
+/**
+ * 
+ * >**New:** The document save notification is sent from the client to the server when the document was saved in the client.
+ * 
+ * * method: 'textDocument/didSave'
+ * * params: `DidSaveTextDocumentParams` defined as follows:
+ */
 interface DidSaveTextDocumentParams {
 	/**
 	 * The document that was saved.

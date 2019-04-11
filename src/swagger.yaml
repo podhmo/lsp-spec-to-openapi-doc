@@ -80,6 +80,10 @@ components:
       required:
       - textDocument
     Command:
+      description: Represents a reference to a command. Provides a title which will
+        be used to represent a command in the UI. Commands are identitifed using a
+        string identifier and the protocol currently doesn't specify a set of well
+        known commands. So executing a command requires some tool extension code.
       type: object
       properties:
         title:
@@ -218,6 +222,8 @@ components:
     D:
       type: object
     Diagnostic:
+      description: Represents a diagnostic, such as a compiler error or warning. Diagnostic
+        objects are only valid in the scope of a resource.
       type: object
       properties:
         range:
@@ -245,6 +251,7 @@ components:
       - message
       - range
     DiagnosticSeverity:
+      description: 'The protocol currently supports the following diagnostic severities:'
       enum:
       - 1
       - 2
@@ -302,6 +309,11 @@ components:
       required:
       - textDocument
     DidSaveTextDocumentParams:
+      description: |-
+        >**New:** The document save notification is sent from the client to the server when the document was saved in the client.
+
+        * method: 'textDocument/didSave'
+        * params: `DidSaveTextDocumentParams` defined as follows:
       type: object
       properties:
         textDocument:
@@ -524,6 +536,8 @@ components:
       required:
       - capabilities
     Location:
+      description: Represents a location inside a resource, such as a line inside
+        a text file.
       type: object
       properties:
         uri:
@@ -558,6 +572,8 @@ components:
         - value
       - type: string
     Message:
+      description: A general message as defined by JSON-RPC. The language server protocol
+        always uses "2.0" as the jsonrpc version.
       type: object
       properties:
         jsonrpc:
@@ -581,6 +597,8 @@ components:
       - 4
       type: number
     NotificationMessage:
+      description: A notification message. A processed notification message must not
+        send a response back. They work like events.
       type: object
       properties:
         method:
@@ -612,6 +630,9 @@ components:
       required:
       - label
     Position:
+      description: Position in a text document expressed as zero-based line and character
+        offset. A position is between two characters like an 'insert' cursor in a
+        editor.
       type: object
       properties:
         line:
@@ -638,6 +659,9 @@ components:
       - diagnostics
       - uri
     Range:
+      description: A range in a text document expressed as (zero-based) start and
+        end positions. A range is comparable to a selection in an editor. Therefore
+        the end position is exclusive.
       type: object
       properties:
         start:
@@ -692,6 +716,9 @@ components:
       - position
       - textDocument
     RequestMessage:
+      description: A request message to describe a request between the client and
+        the server. Every processed request must send a response back to the sender
+        of the request.
       type: object
       properties:
         id:
@@ -746,6 +773,7 @@ components:
       - code
       - message
     ResponseMessage:
+      description: Response Message sent as a result of a request.
       type: object
       properties:
         id:
@@ -957,6 +985,8 @@ components:
       required:
       - text
     TextDocumentIdentifier:
+      description: 'Text documents are identified using a URI. On the protocol level,
+        URIs are passed as strings. The corresponding JSON structure looks like this:'
       type: object
       properties:
         uri:
@@ -965,6 +995,8 @@ components:
       required:
       - uri
     TextDocumentItem:
+      description: '>**New:** An item to transfer a text document from the client
+        to the server.'
       type: object
       properties:
         uri:
@@ -987,6 +1019,10 @@ components:
       - uri
       - version
     TextDocumentPositionParams:
+      description: |-
+        >**Changed:** Was `TextDocumentPosition` in 1.0 with inlined parameters
+
+        A parameter literal used in requests to pass a text document and a position inside that document.
       type: object
       properties:
         textDocument:
@@ -1007,6 +1043,7 @@ components:
       - 2
       type: number
     TextEdit:
+      description: A textual edit applicable to a text document.
       type: object
       properties:
         range:
@@ -1023,6 +1060,8 @@ components:
       - newText
       - range
     VersionedTextDocumentIdentifier:
+      description: '>**New:** An identifier to denote a specific version of a text
+        document.'
       type: object
       properties:
         version:
@@ -1035,6 +1074,8 @@ components:
       - uri
       - version
     WorkspaceEdit:
+      description: A workspace edit represents changes to many resources managed in
+        the workspace.
       type: object
       properties:
         changes:

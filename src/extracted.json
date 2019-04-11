@@ -2,9 +2,23 @@
   "components": {
     "schemas": [
       [
+        "/**\n",
+        " * \n",
+        " * A general message as defined by JSON-RPC. The language server protocol always uses \"2.0\" as the jsonrpc version.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface Message {\n",
         "\tjsonrpc: string;\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * A request message to describe a request between the client and the server. Every processed request must send a response back to the sender of the request.\n",
+        " * \n",
+        " */\n"
       ],
       [
         "interface RequestMessage extends Message {\n",
@@ -24,6 +38,13 @@
         "\t */\n",
         "\tparams?: any\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * Response Message sent as a result of a request.\n",
+        " * \n",
+        " */\n"
       ],
       [
         "interface ResponseMessage extends Message {\n",
@@ -73,6 +94,13 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * A notification message. A processed notification message must not send a response back. They work like events.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface NotificationMessage extends Message {\n",
         "\t/**\n",
         "\t * The method to be invoked.\n",
@@ -94,6 +122,13 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * Position in a text document expressed as zero-based line and character offset. A position is between two characters like an 'insert' cursor in a editor.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface Position {\n",
         "\t/**\n",
         "\t * Line position in a document (zero-based).\n",
@@ -105,6 +140,13 @@
         "\t */\n",
         "\tcharacter: number;\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * A range in a text document expressed as (zero-based) start and end positions. A range is comparable to a selection in an editor. Therefore the end position is exclusive.\n",
+        " * \n",
+        " */\n"
       ],
       [
         "interface Range {\n",
@@ -120,10 +162,23 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * Represents a location inside a resource, such as a line inside a text file.\n",
+        " */\n"
+      ],
+      [
         "interface Location {\n",
         "\turi: string;\n",
         "\trange: Range;\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * Represents a diagnostic, such as a compiler error or warning. Diagnostic objects are only valid in the scope of a resource.\n",
+        " * \n",
+        " */\n"
       ],
       [
         "interface Diagnostic {\n",
@@ -156,6 +211,13 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * The protocol currently supports the following diagnostic severities:\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "enum DiagnosticSeverity {\n",
         "\t/**\n",
         "\t * Reports an error.\n",
@@ -176,6 +238,13 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * Represents a reference to a command. Provides a title which will be used to represent a command in the UI. Commands are identitifed using a string identifier and the protocol currently doesn't specify a set of well known commands. So executing a command requires some tool extension code.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface Command {\n",
         "\t/**\n",
         "\t * Title of the command, like `save`.\n",
@@ -193,6 +262,13 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * A textual edit applicable to a text document.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface TextEdit {\n",
         "\t/**\n",
         "\t * The range of the text document to be manipulated. To insert\n",
@@ -208,6 +284,13 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * A workspace edit represents changes to many resources managed in the workspace.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface WorkspaceEdit {\n",
         "\t/**\n",
         "\t * Holds changes to existing resources.\n",
@@ -216,12 +299,25 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * Text documents are identified using a URI. On the protocol level, URIs are passed as strings. The corresponding JSON structure looks like this:\n",
+        " */\n"
+      ],
+      [
         "interface TextDocumentIdentifier {\n",
         "\t/**\n",
         "\t * The text document's URI.\n",
         "\t */\n",
         "\turi: string;\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * >**New:** An item to transfer a text document from the client to the server.\n",
+        " * \n",
+        " */\n"
       ],
       [
         "interface TextDocumentItem {\n",
@@ -248,12 +344,28 @@
         "}\n"
       ],
       [
+        "/**\n",
+        " * \n",
+        " * >**New:** An identifier to denote a specific version of a text document.\n",
+        " * \n",
+        " */\n"
+      ],
+      [
         "interface VersionedTextDocumentIdentifier extends TextDocumentIdentifier {\n",
         "\t/**\n",
         "\t * The version number of this document.\n",
         "\t */\n",
         "\tversion: number;\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * >**Changed:** Was `TextDocumentPosition` in 1.0 with inlined parameters\n",
+        " * \n",
+        " * A parameter literal used in requests to pass a text document and a position inside that document.\n",
+        " * \n",
+        " */\n"
       ],
       [
         "interface TextDocumentPositionParams {\n",
@@ -585,6 +697,15 @@
         "\t */\n",
         "\ttextDocument: TextDocumentIdentifier;\n",
         "}\n"
+      ],
+      [
+        "/**\n",
+        " * \n",
+        " * >**New:** The document save notification is sent from the client to the server when the document was saved in the client.\n",
+        " * \n",
+        " * * method: 'textDocument/didSave'\n",
+        " * * params: `DidSaveTextDocumentParams` defined as follows:\n",
+        " */\n"
       ],
       [
         "interface DidSaveTextDocumentParams {\n",

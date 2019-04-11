@@ -27,6 +27,11 @@
                       "\t\t...\n",
                       "\t}\n",
                       "}\n"
+                    ],
+                    "description": [
+                      "/**\n",
+                      " * \n",
+                      " */\n"
                     ]
                   }
                 ]
@@ -47,6 +52,13 @@
                             "interface Message {\n",
                             "\tjsonrpc: string;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * A general message as defined by JSON-RPC. The language server protocol always uses \"2.0\" as the jsonrpc version.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -76,6 +88,13 @@
                             "\t */\n",
                             "\tparams?: any\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * A request message to describe a request between the client and the server. Every processed request must send a response back to the sender of the request.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -133,6 +152,13 @@
                             "\texport const serverErrorStart: number = -32099;\n",
                             "\texport const serverErrorEnd: number = -32000;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * Response Message sent as a result of a request.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -156,6 +182,13 @@
                             "\t */\n",
                             "\tparams?: any\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * A notification message. A processed notification message must not send a response back. They work like events.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -182,7 +215,8 @@
                             "\t */\n",
                             "\tid: number | string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     }
@@ -217,6 +251,13 @@
                             "   |   _____________________|__\n",
                             "  / \\ /                        \\\n",
                             "  urn:example:animal:ferret:nose\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * URI's are transferred as strings. The URI's format is defined in [http://tools.ietf.org/html/rfc3986](http://tools.ietf.org/html/rfc3986)\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -240,6 +281,13 @@
                             "\t */\n",
                             "\tcharacter: number;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * Position in a text document expressed as zero-based line and character offset. A position is between two characters like an 'insert' cursor in a editor.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -263,6 +311,13 @@
                             "\t */\n",
                             "\tend: Position;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * A range in a text document expressed as (zero-based) start and end positions. A range is comparable to a selection in an editor. Therefore the end position is exclusive.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -279,6 +334,12 @@
                             "\turi: string;\n",
                             "\trange: Range;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * Represents a location inside a resource, such as a line inside a text file.\n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -319,6 +380,13 @@
                             "\t */\n",
                             "\tmessage: string;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * Represents a diagnostic, such as a compiler error or warning. Diagnostic objects are only valid in the scope of a resource.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         },
                         {
@@ -343,6 +411,13 @@
                             "\t */\n",
                             "\tHint = 4\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * The protocol currently supports the following diagnostic severities:\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -370,6 +445,13 @@
                             "\t */\n",
                             "\targuments?: any[];\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * Represents a reference to a command. Provides a title which will be used to represent a command in the UI. Commands are identitifed using a string identifier and the protocol currently doesn't specify a set of well known commands. So executing a command requires some tool extension code.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -395,6 +477,13 @@
                             "\t */\n",
                             "\tnewText: string;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * A textual edit applicable to a text document.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -413,6 +502,13 @@
                             "\t */\n",
                             "\tchanges: { [uri: string]: TextEdit[]; };\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * A workspace edit represents changes to many resources managed in the workspace.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -431,6 +527,12 @@
                             "\t */\n",
                             "\turi: string;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * Text documents are identified using a URI. On the protocol level, URIs are passed as strings. The corresponding JSON structure looks like this:\n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -465,6 +567,13 @@
                             "\t */\n",
                             "\ttext: string;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * >**New:** An item to transfer a text document from the client to the server.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -483,6 +592,13 @@
                             "\t */\n",
                             "\tversion: number;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * >**New:** An identifier to denote a specific version of a text document.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -506,6 +622,15 @@
                             "\t */\n",
                             "\tposition: Position;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * >**Changed:** Was `TextDocumentPosition` in 1.0 with inlined parameters\n",
+                            " * \n",
+                            " * A parameter literal used in requests to pass a text document and a position inside that document.\n",
+                            " * \n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -558,7 +683,8 @@
                             "\t */\n",
                             "\tcapabilities: ClientCapabilities;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -566,7 +692,8 @@
                           "lines": [
                             "interface ClientCapabilities {\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -585,7 +712,8 @@
                             "\t */\n",
                             "\tcapabilities: ServerCapabilities;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -599,7 +727,8 @@
                             "\t */\n",
                             "\tretry: boolean;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -623,7 +752,8 @@
                             "\t */\n",
                             "\tIncremental = 2\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -643,7 +773,8 @@
                             "\t */\n",
                             "\ttriggerCharacters?: string[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -658,7 +789,8 @@
                             "\t */\n",
                             "\ttriggerCharacters?: string[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -673,7 +805,8 @@
                             "\t */\n",
                             "\tresolveProvider?: boolean;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -692,7 +825,8 @@
                             "\t */\n",
                             "\tmoreTriggerCharacter?: string[]\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -760,7 +894,8 @@
                             "\t */\n",
                             "\trenameProvider?: boolean\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -827,7 +962,8 @@
                             "\t */\n",
                             "\tmessage: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -851,7 +987,8 @@
                             "\t */\n",
                             "\tLog = 4\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -895,7 +1032,8 @@
                             "\t */\n",
                             "\tactions?: MessageActionItem[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -907,7 +1045,8 @@
                             "\t */\n",
                             "\ttitle: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -938,7 +1077,8 @@
                             "\t */\n",
                             "\tmessage: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -978,7 +1118,8 @@
                             "\t */\n",
                             "\tsettings: any;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1004,7 +1145,8 @@
                             "\t */\n",
                             "\ttextDocument: TextDocumentItem;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1037,7 +1179,8 @@
                             "\t */\n",
                             "\tcontentChanges: TextDocumentContentChangeEvent[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1063,7 +1206,8 @@
                             "\t */\n",
                             "\ttext: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1089,7 +1233,8 @@
                             "\t */\n",
                             "\ttextDocument: TextDocumentIdentifier;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1107,6 +1252,15 @@
                             "\t */\n",
                             "\ttextDocument: TextDocumentIdentifier;\n",
                             "}\n"
+                          ],
+                          "description": [
+                            "/**\n",
+                            " * \n",
+                            " * >**New:** The document save notification is sent from the client to the server when the document was saved in the client.\n",
+                            " * \n",
+                            " * * method: 'textDocument/didSave'\n",
+                            " * * params: `DidSaveTextDocumentParams` defined as follows:\n",
+                            " */\n"
                           ]
                         }
                       ]
@@ -1133,7 +1287,8 @@
                             "\t */\n",
                             "\tchanges: FileEvent[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1156,7 +1311,8 @@
                             "\t */\n",
                             "\tDeleted = 3\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1175,7 +1331,8 @@
                             "\t */\n",
                             "\ttype: number;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1206,7 +1363,8 @@
                             "\t */\n",
                             "\tdiagnostics: Diagnostic[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1248,7 +1406,8 @@
                             "\t */\n",
                             "\titems: CompletionItem[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1314,7 +1473,8 @@
                             "\t */\n",
                             "\tdata?: any\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1343,7 +1503,8 @@
                             "\tFile = 17,\n",
                             "\tReference = 18\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1407,7 +1568,8 @@
                             "\t */\n",
                             "\trange?: Range;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1424,7 +1586,8 @@
                             " * ```\n",
                             " */\n",
                             "type MarkedString = string | { language: string; value: string };\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1472,7 +1635,8 @@
                             "\t */\n",
                             "\tactiveParameter?: number;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1501,7 +1665,8 @@
                             "\t */\n",
                             "\tparameters?: ParameterInformation[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1524,7 +1689,8 @@
                             "\t */\n",
                             "\tdocumentation?: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1569,7 +1735,8 @@
                             "interface ReferenceParams extends TextDocumentPositionParams {\n",
                             "\tcontext: ReferenceContext\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1581,7 +1748,8 @@
                             "\t */\n",
                             "\tincludeDeclaration: boolean;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -1633,7 +1801,8 @@
                             "\t */\n",
                             "\tkind?: number;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1658,7 +1827,8 @@
                             "\t */\n",
                             "\tWrite = 3\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1684,7 +1854,8 @@
                             "\t */\n",
                             "\ttextDocument: TextDocumentIdentifier;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -1722,7 +1893,8 @@
                             "\t */\n",
                             "\tcontainerName?: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1751,7 +1923,8 @@
                             "\tBoolean = 17,\n",
                             "\tArray = 18,\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1780,7 +1953,8 @@
                             "\t */\n",
                             "\tquery: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -1827,7 +2001,8 @@
                             "\t */\n",
                             "\tcontext: CodeActionContext;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -1843,7 +2018,8 @@
                             "\t */\n",
                             "\tdiagnostics: Diagnostic[];\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -1877,7 +2053,8 @@
                             "\t */\n",
                             "\ttextDocument: TextDocumentIdentifier;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -1914,7 +2091,8 @@
                             "\t */\n",
                             "\tdata?: any\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -1962,7 +2140,8 @@
                             "\t */\n",
                             "\ttextDocument: TextDocumentIdentifier;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -1989,7 +2168,8 @@
                             "\t */\n",
                             "\ttarget: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         }
                       ]
                     },
@@ -2042,7 +2222,8 @@
                             "\t */\n",
                             "\toptions: FormattingOptions;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "code",
@@ -2067,7 +2248,8 @@
                             "\t */\n",
                             "\t[key: string]: boolean | number | string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -2111,7 +2293,8 @@
                             "\t */\n",
                             "\toptions: FormattingOptions;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -2160,7 +2343,8 @@
                             "\t */\n",
                             "\toptions: FormattingOptions;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",
@@ -2206,7 +2390,8 @@
                             "\t */\n",
                             "\tnewName: string;\n",
                             "}\n"
-                          ]
+                          ],
+                          "description": ""
                         },
                         {
                           "type": "Response",

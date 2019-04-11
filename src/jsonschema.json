@@ -2,6 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "Message": {
+            "description": "A general message as defined by JSON-RPC. The language server protocol always uses \"2.0\" as the jsonrpc version.",
             "title": "Message",
             "type": "object",
             "properties": {
@@ -15,6 +16,7 @@
             ]
         },
         "RequestMessage": {
+            "description": "A request message to describe a request between the client and the server. Every processed request must send a response back to the sender of the request.",
             "title": "RequestMessage",
             "type": "object",
             "properties": {
@@ -47,6 +49,7 @@
             ]
         },
         "ResponseMessage": {
+            "description": "Response Message sent as a result of a request.",
             "title": "ResponseMessage",
             "type": "object",
             "properties": {
@@ -81,6 +84,7 @@
             "$ref": "#/definitions/ResponseError<D>"
         },
         "NotificationMessage": {
+            "description": "A notification message. A processed notification message must not send a response back. They work like events.",
             "title": "NotificationMessage",
             "type": "object",
             "properties": {
@@ -121,6 +125,7 @@
             ]
         },
         "Position": {
+            "description": "Position in a text document expressed as zero-based line and character offset. A position is between two characters like an 'insert' cursor in a editor.",
             "title": "Position",
             "type": "object",
             "properties": {
@@ -141,6 +146,7 @@
             ]
         },
         "Range": {
+            "description": "A range in a text document expressed as (zero-based) start and end positions. A range is comparable to a selection in an editor. Therefore the end position is exclusive.",
             "title": "Range",
             "type": "object",
             "properties": {
@@ -161,6 +167,7 @@
             ]
         },
         "Location": {
+            "description": "Represents a location inside a resource, such as a line inside a text file.",
             "title": "Location",
             "type": "object",
             "properties": {
@@ -179,6 +186,7 @@
             ]
         },
         "Diagnostic": {
+            "description": "Represents a diagnostic, such as a compiler error or warning. Diagnostic objects are only valid in the scope of a resource.",
             "title": "Diagnostic",
             "type": "object",
             "properties": {
@@ -217,6 +225,7 @@
             ]
         },
         "DiagnosticSeverity": {
+            "description": "The protocol currently supports the following diagnostic severities:",
             "title": "DiagnosticSeverity",
             "enum": [
                 1,
@@ -227,6 +236,7 @@
             "type": "number"
         },
         "Command": {
+            "description": "Represents a reference to a command. Provides a title which will be used to represent a command in the UI. Commands are identitifed using a string identifier and the protocol currently doesn't specify a set of well known commands. So executing a command requires some tool extension code.",
             "title": "Command",
             "type": "object",
             "properties": {
@@ -253,6 +263,7 @@
             ]
         },
         "TextEdit": {
+            "description": "A textual edit applicable to a text document.",
             "title": "TextEdit",
             "type": "object",
             "properties": {
@@ -273,6 +284,7 @@
             ]
         },
         "WorkspaceEdit": {
+            "description": "A workspace edit represents changes to many resources managed in the workspace.",
             "title": "WorkspaceEdit",
             "type": "object",
             "properties": {
@@ -293,6 +305,7 @@
             ]
         },
         "TextDocumentIdentifier": {
+            "description": "Text documents are identified using a URI. On the protocol level, URIs are passed as strings. The corresponding JSON structure looks like this:",
             "title": "TextDocumentIdentifier",
             "type": "object",
             "properties": {
@@ -307,6 +320,7 @@
             ]
         },
         "TextDocumentItem": {
+            "description": ">**New:** An item to transfer a text document from the client to the server.",
             "title": "TextDocumentItem",
             "type": "object",
             "properties": {
@@ -339,6 +353,7 @@
             ]
         },
         "VersionedTextDocumentIdentifier": {
+            "description": ">**New:** An identifier to denote a specific version of a text document.",
             "title": "VersionedTextDocumentIdentifier",
             "type": "object",
             "properties": {
@@ -359,6 +374,7 @@
             ]
         },
         "TextDocumentPositionParams": {
+            "description": ">**Changed:** Was `TextDocumentPosition` in 1.0 with inlined parameters\n\nA parameter literal used in requests to pass a text document and a position inside that document.",
             "title": "TextDocumentPositionParams",
             "type": "object",
             "properties": {
@@ -781,6 +797,7 @@
             ]
         },
         "DidSaveTextDocumentParams": {
+            "description": ">**New:** The document save notification is sent from the client to the server when the document was saved in the client.\n\n* method: 'textDocument/didSave'\n* params: `DidSaveTextDocumentParams` defined as follows:",
             "title": "DidSaveTextDocumentParams",
             "type": "object",
             "properties": {

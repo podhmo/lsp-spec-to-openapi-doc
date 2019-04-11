@@ -63,12 +63,20 @@ def parse(itr: io.TextIOBase):
                     others = []
                     break
                 elif line.lstrip(" ").startswith("```"):
-                    others = []
+                    description = ""
+                    if all(not x.get("attrs", None) for x in buf["content"]):
+                        description = ["/**\n", *[" * " + x for x in others], " */\n"]
                     language = line.strip(" \t\n`")
                     lines = _in_code()
                     buf["content"].append(
-                        {"type": "code", "language": language, "lines": lines}
+                        {
+                            "type": "code",
+                            "language": language,
+                            "lines": lines,
+                            "description": description
+                        }
                     )
+                    others = []
                 else:
                     others.append(line)
 
